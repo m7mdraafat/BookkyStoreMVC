@@ -1,0 +1,313 @@
+/* Base font size */
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+
+}
+html {
+    font-size: 16px;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 18px;
+    }
+}
+
+/* Focus styles */
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #00aaff;
+}
+
+html, body {
+    margin: 0;
+    height:100%;
+}
+
+/* Flex container for the whole page */
+body {
+    display: flex;
+    flex-direction: column;
+    position:relative;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+/* Main content area - ensures it grows to push footer down */
+.container {
+    flex: 1;
+    padding: 1.6rem 0;
+}
+
+.background-image {
+    background-image: url('/Images/Bookshop-rafiki.png'); /* Set your background image */
+    background-size: cover; /* Cover the entire container */
+    background-position: center; /* Center the image */
+    width: 100%;
+    height: 100vh; /* Make the div take full viewport height */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.content {
+    background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent background for better readability */
+    padding: 2rem;
+    border-radius: 0.5rem;
+    text-align: center;
+}
+
+.display-4 {
+    font-size: 2.5rem;
+    margin-bottom: 3rem;
+    color: #333; /* Darker color for better contrast */
+}
+
+/* Baby Blue Background */
+.bg-babyblue {
+    background-color: #90CAF9; /* Baby Blue */
+    color: #FFFFFF; /* White */
+}
+
+/* Navbar styling */
+.navbar {
+    background-color: #293855; /* Bright Baby Blue */
+    height: 70px;
+    width: 100%;
+}
+
+/* Navbar Links */
+.navbar-nav .nav-link {
+    color: lightgray; /* White */
+    text-transform: uppercase;
+    font-size: 22px;
+}
+
+    .navbar-nav .nav-link:hover {
+        color: white; /* Warm Coral */
+    }
+
+/* Navbar logo size */
+.navbar-brand img {
+    height: 45px; /* Adjust the height to a smaller size */
+    max-height: 50px; /* Ensure the logo does not exceed this height */
+    margin: 0 10px 0 10px;
+}
+
+/* Buttons */
+/* Table Modern Styling */
+.table-modern {
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+    .table-modern th, .table-modern td {
+        border: none;
+        padding: 1rem;
+        vertical-align: middle;
+    }
+
+    .table-modern thead th {
+        font-weight: bold;
+        background-color: #007bb5; /* Darker Blue */
+        color: #FFFFFF; /* White */
+    }
+
+    .table-modern tbody tr {
+        border-bottom: 1px solid #e0e0e0; /* Light Gray Border */
+    }
+
+        .table-modern tbody tr:hover {
+            background-color: #f1f1f1; /* Light Gray Hover */
+        }
+
+/* Button Styling */
+/*.btn-outline-primary {
+    color: #007bb5;
+    border-color: #007bb5;
+    border-radius:0.25rem;
+}*/
+
+    .btn-outline-primary:hover {
+        color: #FFFFFF;
+        background-color: #007bb5;
+        border-color: #007bb5;
+    }
+    .btn-outline-danger:hover{
+        background-color:orangered;
+        color:white;
+    }
+/**/
+
+
+
+/* Header Text Styling */
+h2.text-primary {
+    color: #007bb5; /* Darker Blue */
+    font-size: 1.75rem; /* Larger font size for emphasis */
+    font-weight: 700; /* Bolder font weight */
+}
+
+/* Card Styling */
+.text-center {
+    padding: 2rem;
+}
+
+
+.home-content {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Center the content horizontally */
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.card {
+    border: none;
+    border-radius: 0.5rem; /* Rounded corners */
+    overflow: hidden;
+    background-color: #FFFFFF; /* White background for cards */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Slightly larger shadow for depth */
+    padding: 1rem;
+    margin: 1rem;
+}
+
+.card-special {
+    max-width: 600px;
+    width: 100%;
+}
+
+.card-img {
+    width: 100%;
+    border-radius: 0.5rem;
+}
+
+
+.card-title {
+    font-size: 1.25rem; /* Larger font size for card titles */
+    font-weight: 600; /* Bold font weight */
+    margin-bottom: 0.5rem; /* Spacing below title */
+    color: #000000;
+
+}
+
+.card-text {
+    font-size: 1rem; /* Normal font size for text */
+    color: #333333; /* Dark gray text */
+}
+
+
+.btn-group .btn {
+    border-radius: 0.25rem; /* Rounded corners */
+}
+
+
+
+
+/* Header text styling */
+h2.text-primary {
+    color: #007bb5; /* Darker Blue */
+    text-transform: uppercase; /* All letters capitalized */
+}
+
+/* Highlights */
+.highlight {
+    color: #FF6F61; /* Warm Coral */
+}
+
+/* Footer styling */
+/* Footer Styling */
+.footer-main {
+    background-color: #293855; /* Bright Baby Blue */
+    color: #ffffff; /* White */
+    text-align: center; /* Center the text */
+    font-size: 0.875rem; /* Smaller font size */
+    width: 100%;
+    height: 12vh !important;
+    display: block;
+}
+
+    /* Footer link color */
+    .footer a {
+        color: #FFF; /* Warm Coral */
+        text-decoration: none; /* Remove underline */
+        margin: 0 0.5rem; /* Reduce spacing between links */
+    }
+
+        /* Footer link hover color */
+        .footer a:hover {
+            color: #FF6F61; /* Light Coral */
+        }
+
+    /* Footer icons color */
+    .footer i {
+        color: #FF6F61; /* Warm Coral */
+    }
+
+
+/* Additional styles for responsiveness */
+@media (max-width: 576px) {
+    .footer {
+        font-size: 0.75rem; /* Further reduce font size on small screens */
+    }
+}
+
+@media (min-width: 768px) {
+    .display-4 {
+        font-size: 2.5rem;
+    }
+}
+/*Styling Create Category*/
+
+
+.bg-baby-blue {
+    background-color: #4265D6; /* Baby blue color for the header */
+    background-image: linear-gradient(315deg, #89CFF0 0%, #42607c 74%); /* Gradient background */
+    color: #fff4f4;
+    border-bottom: none;
+    text-align: center;
+}
+
+.card-body {
+    background-color: #ffffff; /* White background for the card body */
+    padding: 2rem;
+}
+
+
+.btn {
+    border-radius: 0.25rem; /* Slightly rounded buttons */
+    padding: 0.5rem 1rem;
+}
+
+.btn-baby-blue {
+    background-image: linear-gradient(315deg, #89CFF0 0%, #293855c7 74%); /* Gradient background */
+    color: #fff4f4;
+}
+
+    .btn-baby-blue:hover {
+        background-image: linear-gradient(315deg, #89CFF0 0%, #71808e 74%); /* Gradient background */
+        color: #fff4f4;
+    }
+
+.btn-light {
+    background-color: #f8f9fa;
+    color: #333;
+    border: 1px solid #ccc;
+}
+
+    .btn-light:hover {
+        background-color: #e2e6ea;
+    }
+.text-danger {
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+}
+
+@media (min-width: 768px) {
+    .display-4 {
+        font-size: 2.5rem;
+    }
+}
+
+

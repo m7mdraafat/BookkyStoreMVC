@@ -1,0 +1,28 @@
+﻿@model Category 
+
+<div class="modal fade" id="deleteConfirmationModal" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteConfirmationModalLabel">Delete Confirmation</h5>
+            </div>
+            <div class="modal-body text-dark">
+                Are you sure you want to delete this category?
+            </div>
+            <div class="modal-footer">
+                <a type="button" class="btn btn-primary shadow-sm" style="color:dimgray" asp-action="Index" asp-controller="Category">Cancel</a>
+                <form asp-action="Delete" asp-controller="Category" method="post">
+                    <button type="submit" class="btn btn-outline-danger">Delete</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            $('#deleteConfirmationModal').modal('show');
+        });
+    </script>
+}
