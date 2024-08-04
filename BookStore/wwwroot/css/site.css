@@ -65,7 +65,8 @@ body {
 
 /* Baby Blue Background */
 .bg-babyblue {
-    background-color: #90CAF9; /* Baby Blue */
+    background-color: #293855;
+    background-image: linear-gradient(315deg, #e52527 0%, #42607c82 74%);
     color: #FFFFFF; /* White */
 }
 
@@ -223,7 +224,7 @@ h2.text-primary {
     text-align: center; /* Center the text */
     font-size: 0.875rem; /* Smaller font size */
     width: 100%;
-    height: 12vh !important;
+    height: 9vh !important;
     display: block;
 }
 
@@ -231,7 +232,7 @@ h2.text-primary {
     .footer a {
         color: #FFF; /* Warm Coral */
         text-decoration: none; /* Remove underline */
-        margin: 0 0.5rem; /* Reduce spacing between links */
+        /*margin: 0 0.5rem;*/ /* Reduce spacing between links */
     }
 
         /* Footer link hover color */
@@ -261,8 +262,8 @@ h2.text-primary {
 
 
 .bg-baby-blue {
-    background-color: #4265D6; /* Baby blue color for the header */
-    background-image: linear-gradient(315deg, #89CFF0 0%, #42607c 74%); /* Gradient background */
+    background-color: #293855;
+    background-image: linear-gradient(315deg, #e52527 0%, #42607c82 74%);
     color: #fff4f4;
     border-bottom: none;
     text-align: center;
@@ -280,13 +281,15 @@ h2.text-primary {
 }
 
 .btn-baby-blue {
-    background-image: linear-gradient(315deg, #293885 0%, #00AFB9 74%); /* Gradient background */
+    background-color: #293855;
+    background-image: linear-gradient(315deg, #e52527 0%, #42607c82 74%);
     color: #fff4f4;
     margin-right: 10px;
 }
 
     .btn-baby-blue:hover {
-        background-image: linear-gradient(315deg, #89CFF0 0%, #71808e 74%); /* Gradient background */
+        background-color: #667ca7;
+        background-image: linear-gradient(315deg, #e52527 0%, #42607c82 74%);
         color: #fff4f4;
     }
 

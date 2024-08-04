@@ -12,7 +12,7 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-brand nav-pills navbar-expand-sm navbar-toggleable-sm border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-brand nav-pills navbar-expand-sm navbar-toggleable-sm border-bottom bg-baby-blue box-shadow mb-3">
             <div class="container-fluid">
                 <a class="navbar-brand-img" asp-area="" asp-controller="Home" asp-action="Index">
                     <img src="~/Images/shopping-bag_17350213.png" alt="Book Store" />
@@ -58,16 +58,17 @@
         </div>
     </footer>
  *@
-    <footer class="footer-main">
-        <div class="container">
+    <footer class="footer-main bg-baby-blue">
+        <div class="container mt-1">
             &copy; 2024 - Book Store <i class="bi bi-book-fill"></i> Made with DotNetMastery
             <br />
-            <a href="/privacy-policy">Privacy Policy</a> | <a href="/terms-of-service">Terms of Service</a>
+            <a asp-area="Customer" asp-action="Privacy" asp-controller="Home" class="text-primary">Privacy Policy</a> | <a href="/terms-of-service" class="text-primary">Terms of Service</a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/product.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

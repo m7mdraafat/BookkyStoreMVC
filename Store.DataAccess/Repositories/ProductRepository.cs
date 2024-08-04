@@ -19,23 +19,6 @@ namespace Store.DataAccess.Repositories
             this.dbContext = dbContext;
         }
 
-        public IEnumerable<Product> GetAllWithCategory()
-        {
-            IEnumerable<Product> query = dbContext.Products
-                                        .Include(p => p.Category);
-            return query.ToList();
-        }
-
-     
-        public async Task<IEnumerable<Product>> GetAllWithCategoryAsync()
-        {
-
-            IQueryable<Product> query = dbContext.Products.Include(p => p.Category);
-
-
-            return await query.ToListAsync();
-        }
-
         public void Update(Product product)
         {
             dbContext.Entry(product).State = EntityState.Modified;

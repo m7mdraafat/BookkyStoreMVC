@@ -24,9 +24,8 @@ namespace BookStore.Areas.Admin.Controllers
         // GET: ProductController
         public ActionResult Index()
         {
-            List<Product> products = _unitOfWork.ProductRepository.GetAllWithCategory().ToList();
-
-            return View(products);
+            return View();
+            //return View(products);
         }
 
         // GET: ProductController/Create
@@ -67,31 +66,54 @@ namespace BookStore.Areas.Admin.Controllers
 
                     // save image
                     string wwwrootPath = _webHostEnvironment.WebRootPath;
-                    if(wwwrootPath != null)
+                    if (file != null)
                     {
-                        string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.Name); // image name
-                        string productPath = Path.Combine(wwwrootPath, @"Images\Product"); // get path of product folder
-                        using(var fileStream = new FileStream(Path.Combine(productPath, fileName), FileMode.Create))
+                        string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName); // Get file name with extension
+                        string productPath = Path.Combine(wwwrootPath, @"Images\Product"); // Path to product folder
+
+                        if (!string.IsNullOrEmpty(productVM.Product.ImageUrl))
                         {
-                            file.CopyTo(fileStream);
+                            // Delete the old image 
+                            var oldImagePath = Path.Combine(wwwrootPath, productVM.Product.ImageUrl.TrimStart('\\'));
+                            if (System.IO.File.Exists(oldImagePath))
+                            {
+                                System.IO.File.Delete(oldImagePath);
+                            }
+                        }
+                        if (!Directory.Exists(productPath))
+                        {
+                            Directory.CreateDirectory(productPath); // Create directory if it doesn't exist
                         }
 
-                        productVM.Product.ImageUrl = @"\Images\Product\"+fileName;
-                    }
-                    _unitOfWork.ProductRepository.Add(productVM.Product);
-                    _unitOfWork.Save();
-                    TempData["success"] = "Product created successfully";
+                        string filePath = Path.Combine(productPath, fileName); // Full path to save the file
 
+                        using (var fileStream = new FileStream(filePath, FileMode.Create))
+                        {
+                            file.CopyTo(fileStream); // Save the file to disk
+                        }
+
+                        // Update productVM with the relative path to the saved image
+                        productVM.Product.ImageUrl = @"\Images\Product\" + fileName;
+                    }
+
+                    if(productVM.Product.Id == 0)
+                    {
+                        _unitOfWork.ProductRepository.Add(productVM.Product);
+                        TempData["sucess"] = "Product created successfully";
+                    }
+                    else
+                    {
+                        _unitOfWork.ProductRepository.Update(productVM.Product);
+                        TempData["sucess"] = "Product updated successfully";
+                    }
+                    _unitOfWork.Save();
+                    return RedirectToAction("Index");
+                      
                 }
                 else
                 {
                     // Model State Fix Issues
-                    //productVM.CategoryList = _unitOfWork.CategoryRepository.GetAll().Select(c => new SelectListItem
-                    //{
-                    //    Text = c.Name,
-                    //    Value = c.Id.ToString()
-                    //});
-                    //return View(productVM);
+
                     TempData["error"] = GetModelErrors();
 
                 }
@@ -158,5 +180,23 @@ namespace BookStore.Areas.Admin.Controllers
             }
             return errors.ToString();
         }
+
+        #region API CALLS
+        [HttpGet]
+        public IActionResult GetAll()
+        {
+            try
+            {
+                List<Product> products = _unitOfWork.ProductRepository.GetAll(IncludeProperties: "Category").ToList();
+                return Json(new { data = products });
+            }
+            catch (Exception ex)
+            {
+                // Handle exceptions here, log or return appropriate error response
+                return BadRequest(new { error = ex.Message });
+            }
+        }
+
+        #endregion
     }
 }

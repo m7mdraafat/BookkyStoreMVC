@@ -10,8 +10,6 @@ namespace Store.DataAccess.Repositories.IRepositories
     public interface IProductRepository : IRepository<Product>
     {
         void Update(Product product);
-        Task<IEnumerable<Product>> GetAllWithCategoryAsync();
-        IEnumerable<Product> GetAllWithCategory();
 
     }
 }
