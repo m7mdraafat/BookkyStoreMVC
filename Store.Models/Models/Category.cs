@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Store.Models.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace Store.Models
 {
@@ -12,6 +13,8 @@ namespace Store.Models
         [Display(Name = "Display Order")]
 
         [Range(1, 100)]
-        public int DisplayOrder { get; set; }   
+        public int DisplayOrder { get; set; }
+        //public ICollection<Product>? Products { get; set; } = new List<Product>();      
+        
     }
 }
