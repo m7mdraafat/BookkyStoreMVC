@@ -14,7 +14,8 @@ namespace Store.Models.Models
         [Required]
         public string Title { get; set; }
         [Required]
-
+        public string Description { get; set; }
+        [Required]
         public string ISBN { get; set; }
         [Required]
         [Display(Name ="List Price")]
@@ -32,7 +33,7 @@ namespace Store.Models.Models
         public double Price50 { get; set; }
 
         [Required]
-        [Display(Name = "List Price")]
+        [Display(Name = "Price for 100+")]
         [Range(1, 1000)]
         public double Price100 { get; set; }
         [Required]

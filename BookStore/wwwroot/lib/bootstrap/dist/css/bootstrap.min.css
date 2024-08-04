@@ -3653,11 +3653,12 @@ textarea.form-control-lg {
     }
 
 .dropdown-menu {
-    --bs-dropdown-zindex: 1000;
-    --bs-dropdown-min-width: 10rem;
-    --bs-dropdown-padding-x: 0;
-    --bs-dropdown-padding-y: 0.5rem;
-    --bs-dropdown-spacer: 0.125rem;
+    --bs-dropdown-zindex: 4000;
+    --bs-dropdown-min-width: 11rem;
+    --bs-dropdown-padding-x: 0.3rem;
+    --bs-dropdown-padding-y: 0.6rem;
+    --bs-dropdown-divider-margin-x: 0.156rem;
+    --bs-dropdown-spacer: 0.225rem;
     --bs-dropdown-font-size: 1rem;
     --bs-dropdown-color: var(--bs-body-color);
     --bs-dropdown-bg: rgba(240, 245, 250, 0.8);
@@ -3665,14 +3666,14 @@ textarea.form-control-lg {
     --bs-dropdown-border-radius: var(--bs-border-radius);
     --bs-dropdown-border-width: var(--bs-border-width);
     --bs-dropdown-inner-border-radius: calc(var(--bs-border-radius) - var(--bs-border-width));
-    --bs-dropdown-divider-bg: transparent;
+    --bs-dropdown-divider-bg: gray;
     --bs-dropdown-divider-margin-y: 0.5rem;
-    --bs-dropdown-box-shadow: 8px 8px 40px rgba(0, 0, 0, 0.15),inset 1px 1px 3px rgba(255, 255, 255, 0.5),inset -5px -5px 20px rgba(0, 0, 0, 0.05);
+    --bs-dropdown-box-shadow: 8px 8px 40px rgba(0, 0, 0, 0.10),inset 1px 1px 3px rgba(255, 255, 255, 0.5),inset -5px -5px 20px rgba(0, 0, 0, 0.05);
     --bs-dropdown-link-color: #7b8ab8;
     --bs-dropdown-link-hover-color: #000;
-    --bs-dropdown-link-hover-bg: transparent;
+    --bs-dropdown-link-hover-bg: rgba(255, 255, 255, 0.1);
     --bs-dropdown-link-active-color: #fff;
-    --bs-dropdown-link-active-bg: #378dfc;
+    --bs-dropdown-link-active-bg: rgba(255, 255, 255, 0.1);
     --bs-dropdown-link-disabled-color: #7b8ab8;
     --bs-dropdown-item-padding-x: 1rem;
     --bs-dropdown-item-padding-y: 0.25rem;
@@ -3680,7 +3681,7 @@ textarea.form-control-lg {
     --bs-dropdown-header-padding-x: 1rem;
     --bs-dropdown-header-padding-y: 0.5rem;
     position: absolute;
-    z-index: var(--bs-dropdown-zindex);
+    z-index: 2000;
     display: none;
     min-width: var(--bs-dropdown-min-width);
     padding: var(--bs-dropdown-padding-y) var(--bs-dropdown-padding-x);
@@ -13920,8 +13921,8 @@ textarea.form-control-lg {
 }
 
 .dropdown-menu {
-    -webkit-backdrop-filter: blur(3px);
-    backdrop-filter: blur(3px)
+    -webkit-backdrop-filter: blur(2px);
+    backdrop-filter: blur(2px)
 }
 
 .nav-tabs {

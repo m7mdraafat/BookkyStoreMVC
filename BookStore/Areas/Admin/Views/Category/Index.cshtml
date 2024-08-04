@@ -1,22 +1,21 @@
 ﻿@model List<Category>
 
-<div class="container">
-    <div class="row pt-2 pb-2">
-        <div class="col-6">
-            <h2 class="text-uppercase text-primary">
-                Category List
-            </h2>
-        </div>
-        <div class="col-6 text-end">
-            <a asp-controller="Category" asp-action="Create" class="btn btn-baby-blue btn-sm shadow-sm">
-                <i class="bi bi-plus-circle"></i> Add a New Category
-            </a>
-        </div>
-    </div>
-</div>
 
 <div class="container">
     <div class="row">
+        <div class="row pt-2 m-2 justify-content-between">
+            <div class="col-6 text-start">
+                <h2 class="text-uppercase text-primary">
+                    Category List
+                </h2>
+
+            </div>
+            <div class="col-6 text-end">
+                <a asp-controller="Category" asp-action="Create" class="btn btn-baby-blue btn-sm shadow-sm">
+                    <i class="bi bi-plus-circle"></i> Add a New Category
+                </a>
+            </div>
+        </div>
         @foreach (Category category in Model.OrderBy(c => c.DisplayOrder))
         {
             <div class="col-md-6 mb-3">

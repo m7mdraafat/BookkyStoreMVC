@@ -169,8 +169,7 @@ h2.text-primary {
     overflow: hidden;
     background-color: #FFFFFF; /* White background for cards */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Slightly larger shadow for depth */
-    padding: 1rem;
-    margin: 1rem;
+    margin: 6px;
 }
 
 .card-special {
@@ -281,8 +280,9 @@ h2.text-primary {
 }
 
 .btn-baby-blue {
-    background-image: linear-gradient(315deg, #89CFF0 0%, #293855c7 74%); /* Gradient background */
+    background-image: linear-gradient(315deg, #293885 0%, #00AFB9 74%); /* Gradient background */
     color: #fff4f4;
+    margin-right: 10px;
 }
 
     .btn-baby-blue:hover {

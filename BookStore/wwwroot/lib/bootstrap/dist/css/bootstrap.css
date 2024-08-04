@@ -3830,14 +3830,14 @@ textarea.form-control-lg {
     }
 
 .dropdown-menu {
-    --bs-dropdown-zindex: 1000;
-    --bs-dropdown-min-width: 10rem;
+    --bs-dropdown-zindex: 3000;
+    --bs-dropdown-min-width: 20rem;
     --bs-dropdown-padding-x: 0;
     --bs-dropdown-padding-y: 0.5rem;
     --bs-dropdown-spacer: 0.125rem;
-    --bs-dropdown-font-size: 1rem;
+    --bs-dropdown-font-size: 2rem;
     --bs-dropdown-color: var(--bs-body-color);
-    --bs-dropdown-bg: rgba(240, 245, 250, 0.8);
+    --bs-dropdown-bg: rgba(240, 245, 250, 0.99);
     --bs-dropdown-border-color: transparent;
     --bs-dropdown-border-radius: var(--bs-border-radius);
     --bs-dropdown-border-width: var(--bs-border-width);
