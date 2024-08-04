@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Store.DataAccess.Repositories.IRepositories;
 using Store.Models;
 using Store.Models.Models;
+using System.Collections.Generic;
 using System.Text;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
@@ -21,12 +23,20 @@ namespace BookStore.Areas.Admin.Controllers
         public ActionResult Index()
         {
             List<Product> products = _unitOfWork.ProductRepository.GetAll().ToList();
+
             return View(products);
         }
 
         // GET: ProductController/Create
         public ActionResult Create()
         {
+            IEnumerable<SelectListItem> categoryList = _unitOfWork.CategoryRepository.GetAll()
+                                                    .Select(u => new SelectListItem
+                                                    {
+                                                        Text = u.Name,
+                                                        Value = u.Id.ToString()
+                                                    });
+            ViewBag.CategoryList = categoryList;
             return View();
         }
 
