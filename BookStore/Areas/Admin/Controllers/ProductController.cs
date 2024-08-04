@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Store.DataAccess.Repositories.IRepositories;
 using Store.Models;
 using Store.Models.Models;
+using Store.Models.Models.ViewModels;
 using System.Collections.Generic;
 using System.Text;
 using static System.Runtime.InteropServices.JavaScript.JSType;
@@ -22,50 +23,59 @@ namespace BookStore.Areas.Admin.Controllers
         // GET: ProductController
         public ActionResult Index()
         {
-            List<Product> products = _unitOfWork.ProductRepository.GetAll().ToList();
-            IEnumerable<SelectListItem> categoryList = _unitOfWork.CategoryRepository.GetAll()
-                                                    .Select(u => new SelectListItem
-                                                    {
-                                                        Text = u.Name,
-                                                        Value = u.Id.ToString()
-                                                    });
-            ViewBag.CategoryList = categoryList;
+            List<Product> products = _unitOfWork.ProductRepository.GetAllWithCategory().ToList();
+
             return View(products);
         }
 
         // GET: ProductController/Create
         public ActionResult Create()
         {
-            IEnumerable<SelectListItem> categoryList = _unitOfWork.CategoryRepository.GetAll()
+            ProductVM productVM = new()
+            {
+                CategoryList = _unitOfWork.CategoryRepository.GetAll()
                                                     .Select(u => new SelectListItem
                                                     {
                                                         Text = u.Name,
                                                         Value = u.Id.ToString()
-                                                    });
-            ViewBag.CategoryList = categoryList;
-            return View();
+                                                    }),
+                Product = new Product()
+            };
+            return View(productVM);
         }
 
         // POST: ProductController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Product product)
+        public ActionResult Create(ProductVM productVM)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    _unitOfWork.ProductRepository.Add(product);
+                    _unitOfWork.ProductRepository.Add(productVM.Product);
                     _unitOfWork.Save();
+                    TempData["success"] = "Product created successfully";
+
                 }
-                TempData["success"] = "Product created successfully";
-                return RedirectToAction("Index");
+                else
+                {
+                    // Model State Fix Issues
+                    //productVM.CategoryList = _unitOfWork.CategoryRepository.GetAll().Select(c => new SelectListItem
+                    //{
+                    //    Text = c.Name,
+                    //    Value = c.Id.ToString()
+                    //});
+                    //return View(productVM);
+                    TempData["error"] = GetModelErrors();
+
+                }
             }
             catch
             {
-                TempData["error"] = GetModelErrors();
-                return View("Index");
             }
+            return RedirectToAction("Index");
+
         }
 
         // GET: ProductController/Edit/5
@@ -79,14 +89,17 @@ namespace BookStore.Areas.Admin.Controllers
 
 
             }
-            IEnumerable<SelectListItem> categoryList = _unitOfWork.CategoryRepository.GetAll()
+            ProductVM productVM = new()
+            {
+                CategoryList = _unitOfWork.CategoryRepository.GetAll()
                                                     .Select(u => new SelectListItem
                                                     {
                                                         Text = u.Name,
                                                         Value = u.Id.ToString()
-                                                    });
-            ViewBag.CategoryList = categoryList;
-            return View(productToEdit);
+                                                    }),
+                Product = productToEdit
+            };
+            return View(productVM);
         }
 
         // POST: ProductController/Edit/5
@@ -100,16 +113,20 @@ namespace BookStore.Areas.Admin.Controllers
                 {
                     _unitOfWork.ProductRepository.Update(product);
                     _unitOfWork.Save();
+                    TempData["success"] = "Product updated successfully";
 
                 }
-                TempData["success"] = "Product updated successfully";
-                return RedirectToAction("Index");
+                else
+                {
+                    TempData["error"] = GetModelErrors();
+
+                }
             }
             catch
             {
-                TempData["error"] = GetModelErrors(); 
-                return View();
             }
+            return RedirectToAction("Index");
+
         }
 
         // GET: ProductController/Delete/5
@@ -144,7 +161,7 @@ namespace BookStore.Areas.Admin.Controllers
                     _unitOfWork.ProductRepository.Remove(productToDelete);
                     _unitOfWork.Save();
                 }
-                TempData["success"] = "Product delete successfully"; 
+                TempData["success"] = "Product deleted successfully"; 
                 return RedirectToAction("Index");
             }
             catch
@@ -161,7 +178,7 @@ namespace BookStore.Areas.Admin.Controllers
             {
                 foreach (var error in state.Value.Errors)
                 {
-                    errors.AppendLine(error.ErrorMessage);
+                    errors.AppendLine($"- Error:{error.ErrorMessage}\n");
                 }
             }
             return errors.ToString();

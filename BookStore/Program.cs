@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Store.DataAccess.Data;
 using Store.DataAccess.Repositories;
 using Store.DataAccess.Repositories.IRepositories;
-using System;
+
 
 var builder = WebApplication.CreateBuilder(args);
 

@@ -19,8 +19,9 @@ namespace Store.DataAccess.Repositories
         }
         public void Update(Category category)
         {
-            var existingCategory = dbSet.Attach(category);
             _db.Entry(category).State = EntityState.Modified;
+            _db.SaveChanges();
+
         }
 
     }

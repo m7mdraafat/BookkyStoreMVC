@@ -10,6 +10,7 @@ namespace Store.DataAccess.Repositories.IRepositories
     public interface IRepository<T> where T : class
     {
         T Get(Expression<Func<T, bool>> filter);
+        Task<IEnumerable<T>> GetAllAsync();
         IEnumerable<T> GetAll();
         void Remove(T entity);
         void RemoveRange(IEnumerable<T> entities);

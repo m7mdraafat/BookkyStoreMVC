@@ -37,6 +37,12 @@ namespace Store.DataAccess.Repositories
             return query.ToList();
         }
 
+        public async Task<IEnumerable<T>> GetAllAsync()
+        {
+            IQueryable<T> query = dbSet;
+            return await query.ToListAsync();
+        }
+
         public void Remove(T entity)
         {
             dbSet.Remove(entity);
@@ -46,5 +52,6 @@ namespace Store.DataAccess.Repositories
         {
             dbSet.RemoveRange(entities);
         }
+
     }
 }

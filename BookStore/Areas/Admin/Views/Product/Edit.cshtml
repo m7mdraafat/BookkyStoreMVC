@@ -1,4 +1,4 @@
-﻿@model Product
+﻿@model ProductVM
 
 <div class="card shadow border-0 mt-5">
     <div class="card-header bg-baby-blue">
@@ -9,62 +9,63 @@
         </div>
     </div>
     <div class="card-body p-4">
-        <form asp-action="Create" method="post" class="row">
+        <form asp-action="Edit" method="post" class="row">
             @* <div asp-validation-summary="ModelOnly"></div> *@
+            <input hidden asp-for="Product.Id"/>
             <div class="row mb-3">
                 <div class="col-md-6">
-                    <label asp-for="Title" class="form-label p-0 mx-1"></label>
-                    <input asp-for="Title" class="form-control" />
-                    <span asp-validation-for="Title" class="text-danger"></span>
+                    <label asp-for="Product.Title" class="form-label p-0 mx-1"></label>
+                    <input asp-for="Product.Title" class="form-control" />
+                    <span asp-validation-for="Product.Title" class="text-danger"></span>
                 </div>
                 <div class="col-md-6">
-                    <label asp-for="Description" class="form-label p-0 mx-1"></label>
-                    <textarea asp-for="Description" class="form-control" style="height:62px"></textarea>
-                    <span asp-validation-for="Description" class="text-danger"></span>
+                    <label asp-for="Product.Description" class="form-label p-0 mx-1"></label>
+                    <textarea asp-for="Product.Description" class="form-control" style="height:62px"></textarea>
+                    <span asp-validation-for="Product.Description" class="text-danger"></span>
                 </div>
             </div>
             <div class="row mb-3">
                 <div class="col-md-6">
-                    <label asp-for="ISBN" class="form-label p-0 mx-1"></label>
-                    <input asp-for="ISBN" class="form-control" />
-                    <span asp-validation-for="ISBN" class="text-danger"></span>
+                    <label asp-for="Product.ISBN" class="form-label p-0 mx-1"></label>
+                    <input asp-for="Product.ISBN" class="form-control" />
+                    <span asp-validation-for="Product.ISBN" class="text-danger"></span>
                 </div>
                 <div class="col-md-6">
-                    <label asp-for="Author" class="form-label p-0 mx-1"></label>
-                    <input asp-for="Author" class="form-control" />
-                    <span asp-validation-for="Author" class="text-danger"></span>
-                </div>
-            </div>
-            <div class="row mb-3">
-                <div class="col-md-6">
-                    <label asp-for="ListPrice" class="form-label p-0 mx-1"></label>
-                    <input asp-for="ListPrice" class="form-control" />
-                    <span asp-validation-for="ListPrice" class="text-danger"></span>
-                </div>
-                <div class="col-md-6">
-                    <label asp-for="Price" class="form-label p-0 mx-1"></label>
-                    <input asp-for="Price" class="form-control" />
-                    <span asp-validation-for="Price" class="text-danger"></span>
+                    <label asp-for="Product.Author" class="form-label p-0 mx-1"></label>
+                    <input asp-for="Product.Author" class="form-control" />
+                    <span asp-validation-for="Product.Author" class="text-danger"></span>
                 </div>
             </div>
             <div class="row mb-3">
                 <div class="col-md-6">
-                    <label asp-for="Price50" class="form-label p-0 mx-1"></label>
-                    <input asp-for="Price50" class="form-control" />
-                    <span asp-validation-for="Price50" class="text-danger"></span>
+                    <label asp-for="Product.ListPrice" class="form-label p-0 mx-1"></label>
+                    <input asp-for="Product.ListPrice" class="form-control" />
+                    <span asp-validation-for="Product.ListPrice" class="text-danger"></span>
                 </div>
                 <div class="col-md-6">
-                    <label asp-for="Price100" class="form-label p-0 mx-1"></label>
-                    <input asp-for="Price100" class="form-control" />
-                    <span asp-validation-for="Price100" class="text-danger"></span>
+                    <label asp-for="Product.Price" class="form-label p-0 mx-1"></label>
+                    <input asp-for="Product.Price" class="form-control" />
+                    <span asp-validation-for="Product.Price" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label asp-for="Product.Price50" class="form-label p-0 mx-1"></label>
+                    <input asp-for="Product.Price50" class="form-control" />
+                    <span asp-validation-for="Product.Price50" class="text-danger"></span>
                 </div>
                 <div class="col-md-6">
-                    <label asp-for="CategoryId" class="form-label p-0 mx-1 my-2">Category</label>
-                    <select asp-for="Price100" class="form-select " asp-items="ViewBag.CategoryList">
+                    <label asp-for="Product.Price100" class="form-label p-0 mx-1"></label>
+                    <input asp-for="Product.Price100" class="form-control" />
+                    <span asp-validation-for="Product.Price100" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="Product.CategoryId" class="form-label p-0 mx-1 my-2">Category</label>
+                    <select asp-for="Product.CategoryId" class="form-select " asp-items="@Model.CategoryList">
                         <option disabled value="0">--Select Category--</option>
-                        <option  selected value="@Model.CategoryId">@Model.Title</option>
+                        <option selected value="@Model.Product.CategoryId">@Model.Product.Title</option>
                     </select>
-                    <span asp-validation-for="CategoryId" class="text-danger"></span>
+                    <span asp-validation-for="Product.CategoryId" class="text-danger"></span>
                 </div>
             </div>
             <div class="row  mx-1">
