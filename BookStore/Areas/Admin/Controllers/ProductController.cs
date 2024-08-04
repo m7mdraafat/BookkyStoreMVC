@@ -15,10 +15,11 @@ namespace BookStore.Areas.Admin.Controllers
     public class ProductController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
-
-        public ProductController(IUnitOfWork unitOfWork)
+        private readonly IWebHostEnvironment _webHostEnvironment; // access wwwroot
+        public ProductController(IUnitOfWork unitOfWork, IWebHostEnvironment webHostEnvironment)
         {
             _unitOfWork = unitOfWork;
+            _webHostEnvironment = webHostEnvironment;
         }
         // GET: ProductController
         public ActionResult Index()
@@ -63,6 +64,20 @@ namespace BookStore.Areas.Admin.Controllers
             {
                 if (ModelState.IsValid)
                 {
+
+                    // save image
+                    string wwwrootPath = _webHostEnvironment.WebRootPath;
+                    if(wwwrootPath != null)
+                    {
+                        string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.Name); // image name
+                        string productPath = Path.Combine(wwwrootPath, @"Images\Product"); // get path of product folder
+                        using(var fileStream = new FileStream(Path.Combine(productPath, fileName), FileMode.Create))
+                        {
+                            file.CopyTo(fileStream);
+                        }
+
+                        productVM.Product.ImageUrl = @"\Images\Product\"+fileName;
+                    }
                     _unitOfWork.ProductRepository.Add(productVM.Product);
                     _unitOfWork.Save();
                     TempData["success"] = "Product created successfully";
