@@ -18,8 +18,7 @@ namespace BookStore.Areas.Admin.Controllers
 
         public IActionResult Index()
         {
-            List<Category> categories = _unitOfWork.CategoryRepository.GetAll().ToList();
-            return View(categories);
+            return View();
         }
 
         [HttpGet]
@@ -47,13 +46,13 @@ namespace BookStore.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public IActionResult Edit(int? categoryId)
+        public IActionResult Edit(int? id)
         {
-            if (categoryId == null || categoryId == 0)
+            if (id == null || id == 0)
             {
                 return NotFound();
             }
-            Category? category = _unitOfWork.CategoryRepository.Get(c => c.Id == categoryId);
+            Category category = _unitOfWork.CategoryRepository.Get(c => c.Id == id);
 
             if (category == null)
             {
@@ -86,7 +85,7 @@ namespace BookStore.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            Category? category = _unitOfWork.CategoryRepository.Get(c => c.Id == id);
+            Category category = _unitOfWork.CategoryRepository.Get(c => c.Id == id);
 
             if (category == null)
             {
@@ -109,5 +108,14 @@ namespace BookStore.Areas.Admin.Controllers
             TempData["success"] = "Category deleted successfully";
             return RedirectToAction("Index");
         }
+
+        #region API Calls
+        [HttpGet]
+        public IActionResult GetAll()
+        {
+            List<Category> categories = _unitOfWork.CategoryRepository.GetAll().ToList();
+            return Json(new { data = categories });
+        }
+        #endregion
     }
 }

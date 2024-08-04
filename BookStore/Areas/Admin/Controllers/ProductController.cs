@@ -29,6 +29,7 @@ namespace BookStore.Areas.Admin.Controllers
         }
 
         // GET: ProductController/Create
+        [HttpGet]
         public ActionResult Upsert(int? Id)
         {
             ProductVM productVM = new()

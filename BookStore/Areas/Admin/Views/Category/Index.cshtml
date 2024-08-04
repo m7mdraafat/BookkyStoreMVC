@@ -17,28 +17,14 @@
             </div>
         </div>
         <div class="card-body overflow-auto" style="max-height: 610px;">
-            <div class="row pt-2 m-2 justify-content-start">
-                @foreach (Category category in Model.OrderBy(c => c.DisplayOrder))
-                {
-                    <div class="col-md-4 mb-3">
-                        <div class="card bg-light">
-                            <div class="card-header">Category</div>
-                            <div class="card-body">
-                                <h5 class="card-title text-dark">@category.Name</h5>
-                                <p class="card-text">Display Order: @category.DisplayOrder</p>
-                                <div class="d-flex justify-content-between">
-                                    <a asp-controller="Category" asp-action="Edit" asp-route-categoryId="@category.Id" class="btn text-white btn-outline-primary btn-sm shadow-sm mb-0">
-                                        <i class="bi bi-pencil-square"></i> Edit
-                                    </a>
-                                    <a asp-controller="Category" asp-action="Delete" asp-route-id="@category.Id" class="btn btn-outline-danger btn-sm mb-0">
-                                        <i class="bi bi-trash"></i> Delete
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                }
+            <div class="row pt-2 m-2 justify-content-start" id="categoryContainer">
+                <!-- Category cards will be populated here dynamically -->
             </div>
         </div>
     </div>
 </div>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="~/js/category.js"></script> <!-- Reference to your JavaScript file -->
+}
