@@ -58,6 +58,14 @@
                     <input asp-for="Price100" class="form-control" />
                     <span asp-validation-for="Price100" class="text-danger"></span>
                 </div>
+                <div class="col-md-6">
+                    <label asp-for="CategoryId" class="form-label p-0 mx-1 my-2">Category</label>
+                    <select asp-for="Price100" class="form-select " asp-items="ViewBag.CategoryList">
+                        <option disabled value="0">--Select Category--</option>
+                        <option  selected value="@Model.CategoryId">@Model.Title</option>
+                    </select>
+                    <span asp-validation-for="CategoryId" class="text-danger"></span>
+                </div>
             </div>
             <div class="row  mx-1">
                 <div class="mb-2">

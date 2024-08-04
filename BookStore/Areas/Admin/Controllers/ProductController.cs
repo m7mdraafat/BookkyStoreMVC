@@ -23,7 +23,13 @@ namespace BookStore.Areas.Admin.Controllers
         public ActionResult Index()
         {
             List<Product> products = _unitOfWork.ProductRepository.GetAll().ToList();
-
+            IEnumerable<SelectListItem> categoryList = _unitOfWork.CategoryRepository.GetAll()
+                                                    .Select(u => new SelectListItem
+                                                    {
+                                                        Text = u.Name,
+                                                        Value = u.Id.ToString()
+                                                    });
+            ViewBag.CategoryList = categoryList;
             return View(products);
         }
 
@@ -73,6 +79,13 @@ namespace BookStore.Areas.Admin.Controllers
 
 
             }
+            IEnumerable<SelectListItem> categoryList = _unitOfWork.CategoryRepository.GetAll()
+                                                    .Select(u => new SelectListItem
+                                                    {
+                                                        Text = u.Name,
+                                                        Value = u.Id.ToString()
+                                                    });
+            ViewBag.CategoryList = categoryList;
             return View(productToEdit);
         }
 
