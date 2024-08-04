@@ -11,8 +11,8 @@ using Store.DataAccess.Data;
 namespace Store.DataAccess.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240804121438_MakeImageUrlOptional")]
-    partial class MakeImageUrlOptional
+    [Migration("20240804132123_ImageUrlRequired")]
+    partial class ImageUrlRequired
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -95,6 +95,7 @@ namespace Store.DataAccess.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ImageUrl")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<double>("ListPrice")

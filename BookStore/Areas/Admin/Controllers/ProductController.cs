@@ -29,7 +29,7 @@ namespace BookStore.Areas.Admin.Controllers
         }
 
         // GET: ProductController/Create
-        public ActionResult Create()
+        public ActionResult Upsert(int? Id)
         {
             ProductVM productVM = new()
             {
@@ -41,13 +41,23 @@ namespace BookStore.Areas.Admin.Controllers
                                                     }),
                 Product = new Product()
             };
-            return View(productVM);
+            if(Id == null || Id == 0)
+            {
+                // Create Product
+                return View(productVM);
+            }
+            else
+            {
+                // Update Product
+                productVM.Product = _unitOfWork.ProductRepository.Get(p=>p.Id == Id);
+                return View(productVM);
+            }
         }
 
         // POST: ProductController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(ProductVM productVM)
+        public ActionResult Upsert(ProductVM productVM, IFormFile? file)
         {
             try
             {
@@ -78,56 +88,6 @@ namespace BookStore.Areas.Admin.Controllers
 
         }
 
-        // GET: ProductController/Edit/5
-        public ActionResult Edit(int? id)
-        {
-            Product? productToEdit = _unitOfWork.ProductRepository.Get(c=>c.Id == id);
-            if(productToEdit == null)
-            {
-                TempData["error"] = "Product not found!";
-                return RedirectToAction("Index");
-
-
-            }
-            ProductVM productVM = new()
-            {
-                CategoryList = _unitOfWork.CategoryRepository.GetAll()
-                                                    .Select(u => new SelectListItem
-                                                    {
-                                                        Text = u.Name,
-                                                        Value = u.Id.ToString()
-                                                    }),
-                Product = productToEdit
-            };
-            return View(productVM);
-        }
-
-        // POST: ProductController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, Product product)
-        {
-            try
-            {
-                if (ModelState.IsValid)
-                {
-                    _unitOfWork.ProductRepository.Update(product);
-                    _unitOfWork.Save();
-                    TempData["success"] = "Product updated successfully";
-
-                }
-                else
-                {
-                    TempData["error"] = GetModelErrors();
-
-                }
-            }
-            catch
-            {
-            }
-            return RedirectToAction("Index");
-
-        }
 
         // GET: ProductController/Delete/5
         public ActionResult Delete(int? id)

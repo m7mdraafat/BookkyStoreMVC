@@ -4,14 +4,14 @@
     <div class="card-header bg-baby-blue">
         <div class="row text-center">
             <div class="text-center">
-                <h2 class="py-2" style="text-transform:uppercase">Edit Product</h2>
+                <h2 class="py-2" style="text-transform:uppercase">@(Model.Product.Id!=0?"Update":"Create") Product</h2>
             </div>
         </div>
     </div>
     <div class="card-body p-4">
-        <form asp-action="Edit" method="post" class="row">
+        <form asp-action="Upsert" method="post" class="row" enctype="multipart/form-data">
+            <input hidden asp-for="Product.Id" />
             @* <div asp-validation-summary="ModelOnly"></div> *@
-            <input hidden asp-for="Product.Id"/>
             <div class="row mb-3">
                 <div class="col-md-6">
                     <label asp-for="Product.Title" class="form-label p-0 mx-1"></label>
@@ -60,17 +60,32 @@
                     <span asp-validation-for="Product.Price100" class="text-danger"></span>
                 </div>
                 <div class="col-md-6">
+                    <label asp-for="Product.ImageUrl" class="form-label p-0 mx-1 my-2"></label>
+                    <input type="file" class="form-control" />
+                    <span asp-validation-for="Product.Price100" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
                     <label asp-for="Product.CategoryId" class="form-label p-0 mx-1 my-2">Category</label>
-                    <select asp-for="Product.CategoryId" class="form-select " asp-items="@Model.CategoryList">
-                        <option disabled value="0">--Select Category--</option>
-                        <option selected value="@Model.Product.CategoryId">@Model.Product.Title</option>
+                    <select asp-for="Product.CategoryId" class="form-select shadow-sm" asp-items="@Model.CategoryList">
+                        <option disabled>--Select Category--</option>
+                        @if (Model.Product.Id != 0)
+                        {
+                            <option selected value="@Model.Product.Id">@Model.Product.Title</option>
+                        }
+                        else
+                        {
+                            <option disabled selected>--Select Category--</option>
+
+                        }
                     </select>
                     <span asp-validation-for="Product.CategoryId" class="text-danger"></span>
                 </div>
             </div>
-            <div class="row  mx-1">
+            <div class="row  mx-0 ">
                 <div class="mb-2">
-                    <button type="submit" class="btn btn-outline-primary bg-baby-blue form-control">Create</button>
+                    <button type="submit" class="btn btn-outline-primary bg-baby-blue form-control">
+                        @(Model.Product.Id != 0 ? "Update" : "Create")
+                    </button>
                 </div>
                 <div class="mb-2">
                     <a asp-controller="Product" asp-action="Index" class="btn border-1 btn-secondary shadow-sm form-control">

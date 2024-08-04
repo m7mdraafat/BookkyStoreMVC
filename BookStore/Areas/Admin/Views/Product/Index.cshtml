@@ -1,69 +1,47 @@
 ﻿@model List<Product>
 
-<div class="card shadow border-0 mt-5">
-    <div class="card-header bg-baby-blue m-0 p-0">
-        <div class="row">
-            <div class="text-center">
-                <h2 class="py-2 text-uppercase">
-                    Product List
-                </h2>
-            </div>
-        </div>
-        <div class="card-body p-4">
-            <div class="mb-2 row pb-1">
+<div class="container">
+    <div class="card card-header-tabs mt-4">
+        <div class="card-header">
+            <div class="row pt-2 m-2 justify-content-between align-items-center">
                 <div class="col-6">
+                    <h2 class="text-uppercase text-primary-emphasis">
+                        Product List
+                    </h2>
                 </div>
                 <div class="col-6 text-end">
-                    <a asp-controller="Product" asp-action="Create" class="btn btn-sm btn-baby-blue">
-                        <i class="bi bi-plus-circle"></i> Create New Product
+                    <a asp-controller="Product" asp-action="Upsert" class="btn btn-baby-blue btn-sm shadow-sm">
+                        <i class="bi bi-plus-circle"></i> Add a New Product
                     </a>
                 </div>
             </div>
-            <table class="table table-bordered overflow-scroll border-bottom table-modern shadow-lg table-striped">
-                <thead class="bg-baby-blue">
-                    <tr>
-                        <th>
-                            Title
-                        </th>
-                        <th>
-                            ISBN
-                        </th>
-                        <th>
-                            Price
-                        </th>
-                        <th>
-                            Author
-                        </th>
-                        <th>
-                            Category
-                        </th>
-                        <th>Actions</th> 
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var obj in Model.OrderBy(p => p.ListPrice))
-                    {
-                        <tr>
-
-                            <td>@obj.Title</td>
-                            <td>@obj.ISBN</td>
-                            <td>@obj.ListPrice</td>
-                            <td>@obj.Author</td>
-                            <td>@obj.Category.Name</td> 
-                            <td>
-                                <div class="w-75 ms-lg-5">
-                                    <a asp-controller="Product" asp-action="Edit" asp-route-id="@obj.Id" class="btn text-white btn-outline-primary btn-sm shadow-none mb-0">
+        </div>
+        <div class="card-body overflow-auto" style="max-height: 620px;">
+            <div class="row pt-1 m-1 justify-content-start">
+                @foreach (Product product in Model.OrderBy(p => p.Price))
+                {
+                    <div class="col-md-4 mb-3">
+                        <div class="card bg-light">
+                            <div class="card-header text-dark">Product</div>
+                            <div class="card-body">
+                                <h5 class="card-title text-dark">@product.Title</h5>
+                                <p class="card-text">ISBN: @product.ISBN</p>
+                                <p class="card-text">Category: @product.Category.Name</p>
+                                <p class="card-text">Author: @product.Author</p>
+                                <p class="card-text">Price: $@product.Price</p>
+                                <div class="d-flex justify-content-between">
+                                    <a asp-controller="Product" asp-action="Upsert" asp-route-id="@product.Id" class="btn text-white btn-outline-primary btn-sm shadow-sm mb-0">
                                         <i class="bi bi-pencil-square"></i> Edit
                                     </a>
-                                    <a asp-controller="Product" asp-action="Delete" asp-route-id="@obj.Id" class="btn btn-outline-danger btn-sm shadow-none mb-0">
+                                    <a asp-controller="Product" asp-action="Delete" asp-route-id="@product.Id" class="btn btn-outline-danger btn-sm mb-0">
                                         <i class="bi bi-trash"></i> Delete
                                     </a>
                                 </div>
-                            </td>
-                        </tr> 
-                    }
-                </tbody>
-            </table>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
         </div>
     </div>
 </div>
