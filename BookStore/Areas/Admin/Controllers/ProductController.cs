@@ -197,7 +197,8 @@ namespace BookStore.Areas.Admin.Controllers
                 return Json(new
                 {
                     data = products,
-                    totalPages = (int)Math.Ceiling((double)totalProducts / pageSize)
+                    totalPages = (int)Math.Ceiling((double)totalProducts / pageSize),
+                    totalProducts = totalProducts
                 });
             }
             catch (Exception ex)

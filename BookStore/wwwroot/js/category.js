@@ -1,6 +1,7 @@
 ﻿let currentCategoryPage = 1;
 const CategoryPageSize = 6;
 let CategoryTotalPages = 1;
+let totalCategories = 0; // Store the total number of categories
 
 $(document).ready(function () {
     loadCategoryCards(currentCategoryPage);
@@ -13,10 +14,12 @@ function loadCategoryCards(page) {
         method: "GET",
         success: function (response) {
             console.log("Response received:", response); // Debugging line
-            if (response && response.data && response.totalPages) {
+            if (response && response.data && response.totalPages && response.totalCategories !== undefined) {
                 populateCategoryCards(response.data);
                 CategoryTotalPages = response.totalPages;
+                totalCategories = response.totalCategories; // Update totalCategories
                 updatePaginationCategoryControls(page);
+                updatePageInfo(page);
             } else {
                 console.error("Invalid response format:", response);
             }
@@ -87,4 +90,21 @@ function createCategoryPageButton(text, targetPage, isDisabled) {
         }
     });
     return button;
+}
+
+function updatePageInfo(page) {
+    // Check if totalCategories is valid
+    if (totalCategories > 0) {
+        const startIndex = (page - 1) * CategoryPageSize + 1;
+        const endIndex = Math.min(page * CategoryPageSize, totalCategories);
+
+        $('#currentStart').text(startIndex);
+        $('#currentEnd').text(endIndex);
+        $('#totalCategories').text(totalCategories);
+    } else {
+        // If no categories, set the default message
+        $('#currentStart').text(0);
+        $('#currentEnd').text(0);
+        $('#totalCategories').text(0);
+    }
 }

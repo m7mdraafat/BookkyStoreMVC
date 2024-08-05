@@ -1,7 +1,7 @@
 ﻿let currentPage = 1;
 const pageSize = 3;
 let totalPages = 1;
-
+let totalProducts = 0;
 $(document).ready(function () {
     loadProductCards(currentPage);
 });
@@ -13,6 +13,8 @@ function loadProductCards(page) {
         success: function (data) {
             populateProductCards(data.data);
             totalPages = data.totalPages;
+            totalProducts = data.totalProducts;
+            updateProductPageInfo(currentPage);
             updatePaginationControls(page);
         }
     });
@@ -81,4 +83,22 @@ function createPageButton(text, targetPage, isDisabled) {
         }
     });
     return button;
+}
+
+function updateProductPageInfo(page) {
+    if (totalProducts > 0) {
+        const startIndex = (page - 1) * pageSize + 1;
+        const endIndex = Math.min(page * pageSize, totalProducts);
+
+        $('#currentStart').text(startIndex);
+        $('#currentEnd').text(endIndex);
+        $('#totalProducts').text(totalProducts);
+
+    }
+    else {
+
+        $('startIndex').text(0);
+        $('endIndex').text(0);
+        $('totalProducts').text(0);
+    }
 }
