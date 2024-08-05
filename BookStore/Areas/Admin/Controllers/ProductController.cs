@@ -184,16 +184,24 @@ namespace BookStore.Areas.Admin.Controllers
 
         #region API CALLS
         [HttpGet]
-        public IActionResult GetAll()
+        public IActionResult GetAll(int page = 1, int pageSize = 3)
         {
             try
             {
-                List<Product> products = _unitOfWork.ProductRepository.GetAll(IncludeProperties: "Category").ToList();
-                return Json(new { data = products });
+                var totalProducts = _unitOfWork.ProductRepository.GetAll().Count();
+                var products = _unitOfWork.ProductRepository.GetAll(IncludeProperties: "Category")
+                    .Skip((page - 1) * pageSize)
+                    .Take(pageSize)
+                    .ToList();
+
+                return Json(new
+                {
+                    data = products,
+                    totalPages = (int)Math.Ceiling((double)totalProducts / pageSize)
+                });
             }
             catch (Exception ex)
             {
-                // Handle exceptions here, log or return appropriate error response
                 return BadRequest(new { error = ex.Message });
             }
         }

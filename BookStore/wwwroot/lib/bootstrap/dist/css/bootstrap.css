@@ -4960,6 +4960,58 @@ textarea.form-control-lg {
     border-radius: var(--bs-card-border-radius);
     box-shadow: var(--bs-card-box-shadow);
 }
+.card {
+    margin-bottom: 20px;
+    transition: transform 0.2s ease-in-out;
+}
+
+    .card:hover {
+        transform: scale(1.05);
+    }
+
+.card-header {
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.card-body {
+    padding: 20px;
+}
+
+.card-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.card-text {
+    font-size: 1rem;
+}
+/*
+.btn {
+    display: flex;
+    align-items: center;
+}
+
+.btn-outline-primary,
+.btn-outline-danger {
+    width: 100px;
+    justify-content: center;
+}
+
+    .btn-outline-primary:hover,
+    .btn-outline-danger:hover {
+        color: white;
+    }
+
+    .btn-outline-primary:hover {
+        background-color: #007bff;
+        border-color: #007bff;
+    }
+
+    .btn-outline-danger:hover {
+        background-color: #dc3545;
+        border-color: #dc3545;
+    }*/
 
     .card > hr {
         margin-right: 0;
@@ -5324,7 +5376,7 @@ textarea.form-control-lg {
 .pagination {
     --bs-pagination-padding-x: 0.75rem;
     --bs-pagination-padding-y: 1rem;
-    --bs-pagination-font-size: 1rem;
+    --bs-pagination-font-size: 2rem;
     --bs-pagination-color: #7b8ab8;
     --bs-pagination-bg: transparent;
     --bs-pagination-border-width: var(--bs-border-width);
@@ -13960,14 +14012,14 @@ textarea.form-control-lg {
     }
 
 .btn-outline-danger {
-    background-color: red;
-    border: none;
+    background-color: white;
+    border: 1px;
     box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2), -5px -5px 10px rgba(255, 255, 255, 0.1);
-    color: #fff;
+    color: red;
 }
 
     .btn-outline-danger:hover, .btn-outline-danger:focus {
-        background-color: orangered;
+        background-color: red;
         border: none;
         box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2), -5px -5px 10px rgba(255, 255, 255, 0.1);
         color: #fff;

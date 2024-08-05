@@ -4745,7 +4745,9 @@ textarea.form-control-lg {
     background-clip: border-box;
     border: var(--bs-card-border-width) solid var(--bs-card-border-color);
     border-radius: var(--bs-card-border-radius);
-    box-shadow: var(--bs-card-box-shadow)
+    box-shadow: var(--bs-card-box-shadow);
+    margin-bottom: 20px;
+    transition: transform 0.2s ease-in-out;
 }
 
     .card > hr {
@@ -4776,13 +4778,18 @@ textarea.form-control-lg {
 
 .card-body {
     flex: 1 1 auto;
-    padding: var(--bs-card-spacer-y) var(--bs-card-spacer-x);
+    padding: 20px;
     color: var(--bs-card-color)
 }
 
 .card-title {
     margin-bottom: var(--bs-card-title-spacer-y);
-    color: var(--bs-card-title-color)
+    color: var(--bs-card-title-color);
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+.card:hover {
+    transform: scale(1.05);
 }
 
 .card-subtitle {
@@ -4794,6 +4801,9 @@ textarea.form-control-lg {
 .card-text:last-child {
     margin-bottom: 0
 }
+.card-text {
+    font-size: 1rem;
+}
 
 .card-link + .card-link {
     margin-left: var(--bs-card-spacer-x)
@@ -4803,8 +4813,8 @@ textarea.form-control-lg {
     padding: var(--bs-card-cap-padding-y) var(--bs-card-cap-padding-x);
     margin-bottom: 0;
     color: var(--bs-card-cap-color);
-    background-color: var(--bs-card-cap-bg);
-    border-bottom: var(--bs-card-border-width) solid var(--bs-card-border-color)
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #e9ecef;
 }
 
     .card-header:first-child {
@@ -13512,7 +13522,8 @@ textarea.form-control-lg {
     background-color: #d9e3f1;
     border: none;
     box-shadow: 5px 5px 10px rgba(55,94,148,.2),-5px -5px 10px rgba(255,255,255,.4);
-    transition: background-color .15s ease-in-out,border .15s ease-in-out,box-shadow .15s ease-in-out,color .15s ease-in-out
+    transition: background-color .15s ease-in-out,border .15s ease-in-out,box-shadow .15s ease-in-out,color .15s ease-in-out;
+
 }
 
     .btn:focus {
@@ -13599,6 +13610,7 @@ textarea.form-control-lg {
     border: none;
     box-shadow: 5px 5px 10px rgba(0,0,0,.2),-5px -5px 10px rgba(255,255,255,.1);
     color: #fff
+    
 }
 
     .btn-outline-primary:focus, .btn-outline-primary:hover {
@@ -13607,6 +13619,7 @@ textarea.form-control-lg {
         box-shadow: 5px 5px 10px rgba(0,0,0,.2),-5px -5px 10px rgba(255,255,255,.1);
         color: #fff
     }
+
 
     .btn-outline-primary:active, .btn-outline-primary:active:focus {
         background-color: #378dfc;

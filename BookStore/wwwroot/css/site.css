@@ -224,7 +224,7 @@ h2.text-primary {
     text-align: center; /* Center the text */
     font-size: 0.875rem; /* Smaller font size */
     width: 100%;
-    height: 9vh !important;
+    height: 12vh !important;
     display: block;
 }
 
@@ -263,7 +263,7 @@ h2.text-primary {
 
 .bg-baby-blue {
     background-color: #293855;
-    background-image: linear-gradient(315deg, #e52527 0%, #42607c82 74%);
+    background-image: linear-gradient(246deg, var(--bs-indigo) 0%,var(--bs-info-text-emphasis) 74%);
     color: #fff4f4;
     border-bottom: none;
     text-align: center;
@@ -278,19 +278,19 @@ h2.text-primary {
 .btn {
     border-radius: 0.25rem; /* Slightly rounded buttons */
     padding: 0.5rem 1rem;
+
+
 }
 
 .btn-baby-blue {
-    background-color: #293855;
-    background-image: linear-gradient(315deg, #e52527 0%, #42607c82 74%);
-    color: #fff4f4;
+    background-image: linear-gradient(246deg, var(--bs-indigo) 0%,var(--bs-info-text-emphasis) 74%);
+    color: #ffffff;
     margin-right: 10px;
 }
 
     .btn-baby-blue:hover {
-        background-color: #667ca7;
-        background-image: linear-gradient(315deg, #e52527 0%, #42607c82 74%);
-        color: #fff4f4;
+        background-image: linear-gradient(276deg, var(--bs-info-text-emphasis) 0%, var(--bs-indigo 74%);
+        color: #fff;
     }
 
 .btn-light {
@@ -314,3 +314,4 @@ h2.text-primary {
 }
 
 
+/*Pagination*/

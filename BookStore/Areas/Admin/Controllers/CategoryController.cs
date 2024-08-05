@@ -111,10 +111,19 @@ namespace BookStore.Areas.Admin.Controllers
 
         #region API Calls
         [HttpGet]
-        public IActionResult GetAll()
+        public IActionResult GetAll(int page =1, int pageSize=3)
         {
-            List<Category> categories = _unitOfWork.CategoryRepository.GetAll().ToList();
-            return Json(new { data = categories });
+            var totalCategories = _unitOfWork.CategoryRepository.GetAll().Count();
+            List<Category> categories = _unitOfWork.CategoryRepository
+                                                   .GetAll()
+                                                   .Skip((page-1) * pageSize)
+                                                   .Take(pageSize)
+                                                   .ToList();
+            return Json(new {
+                data = categories,
+                totalPages = (int)Math.Ceiling((double)totalCategories/ pageSize)
+
+            });
         }
         #endregion
     }

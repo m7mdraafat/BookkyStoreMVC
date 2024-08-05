@@ -1,13 +1,25 @@
-﻿$(document).ready(function () {
-    loadCategoryCards();
+﻿let currentCategoryPage = 1;
+const CategoryPageSize = 6;
+let CategoryTotalPages = 1;
+
+$(document).ready(function () {
+    loadCategoryCards(currentCategoryPage);
 });
 
-function loadCategoryCards() {
+function loadCategoryCards(page) {
+    console.log("Loading page:", page); // Debugging line
     $.ajax({
-        url: "/admin/Category/GetAll",
+        url: `/admin/Category/GetAll?page=${page}&pageSize=${CategoryPageSize}`,
         method: "GET",
         success: function (response) {
-            populateCategoryCards(response.data);
+            console.log("Response received:", response); // Debugging line
+            if (response && response.data && response.totalPages) {
+                populateCategoryCards(response.data);
+                CategoryTotalPages = response.totalPages;
+                updatePaginationCategoryControls(page);
+            } else {
+                console.error("Invalid response format:", response);
+            }
         },
         error: function (xhr, status, error) {
             console.error("Error loading categories:", error);
@@ -41,4 +53,38 @@ function populateCategoryCards(categories) {
 
         categoryContainer.append(categoryCard);
     });
+}
+
+function updatePaginationCategoryControls(page) {
+    const paginationCategoryList = $('#paginationCategoryNumbers');
+    paginationCategoryList.empty();
+
+    // Add Previous button
+    paginationCategoryList.append(createCategoryPageButton('&laquo;', page - 1, page <= 1));
+
+    // Add page number buttons
+    for (let i = 1; i <= CategoryTotalPages; i++) {
+        const pageButton = $(`<li class="page-item${i === page ? ' active' : ''}"><a class="page-link" href="#">${i}</a></li>`);
+        pageButton.on('click', function () {
+            if (i !== page) {
+                currentCategoryPage = i;
+                loadCategoryCards(currentCategoryPage);
+            }
+        });
+        paginationCategoryList.append(pageButton);
+    }
+
+    // Add Next button
+    paginationCategoryList.append(createCategoryPageButton('&raquo;', page + 1, page >= CategoryTotalPages));
+}
+
+function createCategoryPageButton(text, targetPage, isDisabled) {
+    const button = $(`<li class="page-item${isDisabled ? ' disabled' : ''}"><a class="page-link" href="#">${text}</a></li>`);
+    button.on('click', function () {
+        if (!isDisabled) {
+            currentCategoryPage = targetPage;
+            loadCategoryCards(currentCategoryPage);
+        }
+    });
+    return button;
 }

@@ -16,10 +16,26 @@
                 </div>
             </div>
         </div>
-        <div class="card-body overflow-auto" style="max-height: 620px;">
-            <div class="row pt-1 m-1 justify-content-start" id="productContainer">
+        <div class="card-body" style="max-height: 610px;">
+            <div class="row pt-2 m-2 justify-content-start" id="productContainer">
                 <!-- Product cards will be populated here dynamically -->
             </div>
+            <div>
+                <ul id="paginationNumbers" class="pagination bg-light shadow-none mt-5">
+                    <li class="page-item">
+                        <a class="page-link" id="prevPage">&laquo;</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" id="nextPage">&raquo;</a>
+                    </li>
+                </ul>
+            </div>
+
         </div>
     </div>
 </div>
+
+@section Scripts{
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/js/product.js"></script>
+}
