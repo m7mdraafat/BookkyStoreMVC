@@ -1,30 +1,35 @@
 ﻿@model List<Category>
 
 <div class="container">
-    <div class="card card-header-tabs mt-4">
+    <div class="card card-header-pills rounded shadow-lg" style="margin:7%">
         <div class="card-header">
             <div class="row pt-2 m-2 justify-content-between align-items-center">
                 <div class="col-6">
-                    <h2 class="text-uppercase text-primary-emphasis">
+                    <h2 class="text-uppercase text-primary">
                         Category List
                     </h2>
                 </div>
                 <div class="col-6 text-end">
-                    <a asp-controller="Category" asp-action="Create" class="btn btn-baby-blue btn-sm shadow-sm">
+                    <a asp-controller="Category" asp-action="Create" class="btn btn-primary input-shadow shadow-sm">
                         <i class="bi bi-plus-circle"></i> Add a New Category
                     </a>
                 </div>
             </div>
         </div>
-        <div class="card-body" style="min-height: 710px; max-height: 800px;">
+        <div class="card-body">
             <!-- Display current page information -->
-            <div id="pageInfo" class="mb-3">
-                Showing <span id="currentStart">1</span> to <span id="currentEnd">6</span> of <span id="totalCategories">0</span> categories
+            <div class="row justify-content-between pt-2 m-2">
+                <div id="pageInfo" class="col-6 mt-3 px-4">
+                    Showing <span id="currentCategoryStart">0</span> to <span id="currentCategoryEnd">0</span> of <span id="totalCategories">0</span> categories
+                </div>
+                <div class="col-12 text-end col-md-3">
+                    <input type="text" id="searchInput" class="form-control input-shadow me-sm-2 text-dark" placeholder="Search categories..." />
+                </div>
             </div>
-            <div class="row pt-2 m-2 justify-content-start" id="categoryContainer">
+            <div class="row pt-2 m-2 justify-content-start border-secondary" id="categoryContainer">
                 <!-- Category cards will be populated here dynamically -->
             </div>
-            <div id="paginationCategoryNumbers" class="pagination bg-light shadow-none mt-3">
+            <div id="paginationCategoryNumbers" class="pagination shadow-none bg-white justify-content-end mx-3" style="font-weight:bold; color:black;" >
                 <!-- Pagination controls will be populated here dynamically -->
             </div>
         </div>
@@ -32,6 +37,5 @@
 </div>
 
 @section Scripts {
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="~/js/category.js"></script> <!-- Reference to your JavaScript file -->
 }

@@ -100,12 +100,12 @@ namespace BookStore.Areas.Admin.Controllers
                     if(productVM.Product.Id == 0)
                     {
                         _unitOfWork.ProductRepository.Add(productVM.Product);
-                        TempData["sucess"] = "Product created successfully";
+                        TempData["success"] = "Product created successfully";
                     }
                     else
                     {
                         _unitOfWork.ProductRepository.Update(productVM.Product);
-                        TempData["sucess"] = "Product updated successfully";
+                        TempData["success"] = "Product updated successfully";
                     }
                     _unitOfWork.Save();
                     return RedirectToAction("Index");
@@ -126,49 +126,49 @@ namespace BookStore.Areas.Admin.Controllers
 
         }
 
+        #region old delete actions
+        //// GET: ProductController/Delete/5
+        //public ActionResult Delete(int? id)
+        //{
+        //    Product? productToDelete = _unitOfWork.ProductRepository.Get(c=>c.Id==id);
+        //    if (productToDelete == null)
+        //    {
+        //        TempData["error"] = "Product not found!";
+        //        return RedirectToAction("Index");
 
-        // GET: ProductController/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            Product? productToDelete = _unitOfWork.ProductRepository.Get(c=>c.Id==id);
-            if (productToDelete == null)
-            {
-                TempData["error"] = "Product not found!";
-                return RedirectToAction("Index");
+        //    }
+        //    return View(productToDelete);
+        //}
 
-            }
-            return View(productToDelete);
-        }
+        //// POST: ProductController/Delete/5
+        //[HttpPost, ActionName("Delete")]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult DeletePOST(int? id)
+        //{
+        //    var productToDelete = _unitOfWork.ProductRepository.Get(c => c.Id == id);
+        //    if (productToDelete == null)
+        //    {
+        //        TempData["error"] = "Product not found!";
+        //        return RedirectToAction("Index");
 
-        // POST: ProductController/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeletePOST(int? id)
-        {
-            var productToDelete = _unitOfWork.ProductRepository.Get(c => c.Id == id);
-            if (productToDelete == null)
-            {
-                TempData["error"] = "Product not found!";
-                return RedirectToAction("Index");
-
-            }
-            try
-            {
-                if (ModelState.IsValid)
-                {
-                    _unitOfWork.ProductRepository.Remove(productToDelete);
-                    _unitOfWork.Save();
-                }
-                TempData["success"] = "Product deleted successfully"; 
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                TempData["error"] = GetModelErrors();
-                return View();
-            }
-        }
-
+        //    }
+        //    try
+        //    {
+        //        if (ModelState.IsValid)
+        //        {
+        //            _unitOfWork.ProductRepository.Remove(productToDelete);
+        //            _unitOfWork.Save();
+        //        }
+        //        TempData["success"] = "Product deleted successfully"; 
+        //        return RedirectToAction("Index");
+        //    }
+        //    catch
+        //    {
+        //        TempData["error"] = GetModelErrors();
+        //        return View();
+        //    }
+        //}
+        #endregion
         private string GetModelErrors()
         {
             var errors = new StringBuilder();
@@ -184,12 +184,19 @@ namespace BookStore.Areas.Admin.Controllers
 
         #region API CALLS
         [HttpGet]
-        public IActionResult GetAll(int page = 1, int pageSize = 3)
+        public IActionResult GetAll(int page = 1, int pageSize = 3, string search = "")
         {
             try
             {
-                var totalProducts = _unitOfWork.ProductRepository.GetAll().Count();
-                var products = _unitOfWork.ProductRepository.GetAll(IncludeProperties: "Category")
+                var query = _unitOfWork.ProductRepository.GetAll(IncludeProperties: "Category");
+
+                if (!string.IsNullOrEmpty(search))
+                {
+                    query = query.Where(p => p.Title.StartsWith(search, StringComparison.OrdinalIgnoreCase));
+                }
+
+                var totalProducts = query.Count();
+                var products = query
                     .Skip((page - 1) * pageSize)
                     .Take(pageSize)
                     .ToList();
@@ -205,6 +212,27 @@ namespace BookStore.Areas.Admin.Controllers
             {
                 return BadRequest(new { error = ex.Message });
             }
+        }
+
+        [HttpDelete]
+        public IActionResult Delete(int? id)
+        {
+            var productToBeDeleted = _unitOfWork.ProductRepository.Get(p => p.Id == id);
+            if (productToBeDeleted == null)
+            {
+                return Json(new { success = false, message = "Error while deleting" });
+            }
+
+            var oldImagePath = Path.Combine(_webHostEnvironment.WebRootPath, productToBeDeleted.ImageUrl.TrimStart('\\'));
+
+            if (System.IO.File.Exists(oldImagePath))
+            {
+                System.IO.File.Delete(oldImagePath);
+            }
+
+            _unitOfWork.ProductRepository.Remove(productToBeDeleted);
+            _unitOfWork.Save();
+            return Json(new { success = true, message = "Delete successful" });
         }
 
         #endregion

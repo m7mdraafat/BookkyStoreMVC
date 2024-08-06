@@ -5,12 +5,19 @@ let totalCategories = 0; // Store the total number of categories
 
 $(document).ready(function () {
     loadCategoryCards(currentCategoryPage);
+
+    // Handle search input
+    $('#searchInput').on('input', function () {
+        currentCategoryPage = 1; // Reset to the first page on new search
+        loadCategoryCards(currentCategoryPage);
+    });
 });
 
 function loadCategoryCards(page) {
+    const searchQuery = $('#searchInput').val();
     console.log("Loading page:", page); // Debugging line
     $.ajax({
-        url: `/admin/Category/GetAll?page=${page}&pageSize=${CategoryPageSize}`,
+        url: `/admin/Category/GetAll?page=${page}&pageSize=${CategoryPageSize}&search=${searchQuery}`,
         method: "GET",
         success: function (response) {
             console.log("Response received:", response); // Debugging line
@@ -37,18 +44,18 @@ function populateCategoryCards(categories) {
     categories.forEach(function (category) {
         var categoryCard = `
             <div class="col-md-4 mb-3">
-                <div class="card bg-light">
+                <div class="card card-content shadow-sm border-secondary">
                     <div class="card-header">Category</div>
                     <div class="card-body">
                         <h5 class="card-title text-dark">${category.name}</h5>
                         <p class="card-text">Display Order: ${category.displayOrder}</p>
                         <div class="d-flex justify-content-between">
-                            <a href="/admin/Category/Edit/${category.id}" class="btn text-white btn-outline-primary btn-sm shadow-sm mb-0">
+                            <a href="/admin/Category/Edit/${category.id}" class="btn text-white btn-primary ">
                                 <i class="bi bi-pencil-square"></i> Edit
                             </a>
-                            <a href="/admin/Category/Delete/${category.id}" class="btn btn-outline-danger btn-sm mb-0">
-                                <i class="bi bi-trash"></i> Delete
-                            </a>
+                            <button onClick="deleteCategory('/admin/Category/Delete/${category.id}')" class="btn btn-outline-danger">
+                                <i class="bi bi-trash-circle"></i> Delete
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -98,8 +105,8 @@ function updatePageInfo(page) {
         const startIndex = (page - 1) * CategoryPageSize + 1;
         const endIndex = Math.min(page * CategoryPageSize, totalCategories);
 
-        $('#currentStart').text(startIndex);
-        $('#currentEnd').text(endIndex);
+        $('#currentCategoryStart').text(startIndex);
+        $('#currentCategoryEnd').text(endIndex);
         $('#totalCategories').text(totalCategories);
     } else {
         // If no categories, set the default message
@@ -107,4 +114,32 @@ function updatePageInfo(page) {
         $('#currentEnd').text(0);
         $('#totalCategories').text(0);
     }
+}
+
+
+function deleteCategory(url) {
+    Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!"
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                url: url,
+                type: "DELETE",
+                success: function (data) {
+                    Swal.fire({
+                        title: "Deleted!",
+                        text: "Your category has been deleted.",
+                        icon: "success"
+                    });
+                    loadCategoryCards(currentCategoryPage);
+                }
+            });
+        }
+    });
 }

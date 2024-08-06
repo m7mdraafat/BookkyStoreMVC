@@ -78,47 +78,20 @@ namespace BookStore.Areas.Admin.Controllers
             return View(category);
         }
 
-        [HttpGet]
-        public IActionResult Delete(int? id)
-        {
-            if (id == null || id == 0)
-            {
-                return NotFound();
-            }
-            Category category = _unitOfWork.CategoryRepository.Get(c => c.Id == id);
-
-            if (category == null)
-            {
-                return NotFound();
-            }
-            return View(category);
-        }
-
-        [HttpPost, ActionName("Delete")]
-        public IActionResult DeletePOST(int? id)
-        {
-            var category = _unitOfWork.CategoryRepository.Get(c => c.Id == id);
-            if (category == null)
-            {
-                return NotFound();
-            }
-
-            _unitOfWork.CategoryRepository.Remove(category);
-            _unitOfWork.Save();
-            TempData["success"] = "Category deleted successfully";
-            return RedirectToAction("Index");
-        }
 
         #region API Calls
         [HttpGet]
-        public IActionResult GetAll(int page = 1, int pageSize = 6)
+        public IActionResult GetAll(int page = 1, int pageSize = 6, string search="")
         {
-            var totalCategories = _unitOfWork.CategoryRepository.GetAll().Count();
-            var categories = _unitOfWork.CategoryRepository
-                                        .GetAll()
-                                        .Skip((page - 1) * pageSize)
-                                        .Take(pageSize)
-                                        .ToList();
+            var query = _unitOfWork.CategoryRepository.GetAll();
+            if (!string.IsNullOrEmpty(search))
+            {
+                query = query.Where(c=>c.Name.StartsWith(search, StringComparison.OrdinalIgnoreCase));
+            }
+            var totalCategories = query.Count();
+            var categories = query.Skip((page-1)*pageSize)
+                                  .Take(pageSize)
+                                  .ToList();
 
             return Json(new
             {
@@ -127,6 +100,20 @@ namespace BookStore.Areas.Admin.Controllers
                 totalCategories = totalCategories // Include totalCategories in the response
             });
         }
+
+        [HttpDelete]
+        public IActionResult Delete(int? id)
+        {
+            var category = _unitOfWork.CategoryRepository.Get(x=>x.Id == id);
+            if (category == null)
+            {
+                return Json( new { success= false, message="Error while deleting"});
+            }
+
+            _unitOfWork.CategoryRepository.Remove(category);
+            _unitOfWork.Save();
+            return Json(new { success = true, message = "Delete successfully" });
+        } 
         #endregion
     }
 }

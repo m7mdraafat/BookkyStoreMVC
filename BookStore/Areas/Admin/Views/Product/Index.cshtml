@@ -1,44 +1,42 @@
 ﻿@model List<Product>
 
 <div class="container">
-    <div class="card card-header-tabs mt-4">
+    <div class="card card-header-pills rounded shadow-lg" style="margin:7%">
         <div class="card-header">
             <div class="row pt-2 m-2 justify-content-between align-items-center">
                 <div class="col-6">
-                    <h2 class="text-uppercase text-primary-emphasis">
+                    <h2 class="text-uppercase text-primary">
                         Product List
                     </h2>
                 </div>
                 <div class="col-6 text-end">
-                    <a asp-controller="Product" asp-action="Upsert" class="btn btn-baby-blue btn-sm shadow-sm">
+                    <a asp-controller="Product" asp-action="Upsert" class="btn btn-primary input-shadow shadow-sm">
                         <i class="bi bi-plus-circle"></i> Add a New Product
                     </a>
                 </div>
             </div>
         </div>
-        <div class="card-body" style="max-height: 800px;">
-            <div id="pageInfo" class="mb-3">
-                Showing <span id="currentStart">1</span> to <span id="currentEnd">3</span> of <span id="totalProducts">0</span> products
+        <div class="card-body">
+            <!-- Display current page information -->
+            <div class="row justify-content-between pt-2 m-2">
+                <div id="pageInfo" class="col-6 mt-3 px-4">
+                    Showing <span id="currentStart">0</span> to <span id="currentEnd">0</span> of <span id="totalProducts">0</span> products
+                </div>
+                <div class="col-12 text-end col-md-3">
+                    <input type="text" id="searchInput" class="form-control me-sm-2 input-shadow text-dark" placeholder="Search products..." />
+                </div>
             </div>
             <div class="row pt-2 m-2 justify-content-start" id="productContainer">
-                <!-- Product cards will be populated here dynamically -->
+                <!-- Category cards will be populated here dynamically -->
             </div>
-            <div>
-                <ul id="paginationNumbers" class="pagination bg-light shadow-none mt-5">
-                    <li class="page-item">
-                        <a class="page-link" id="prevPage">&laquo;</a>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link" id="nextPage">&raquo;</a>
-                    </li>
-                </ul>
+            <div id="paginationNumbers" class="pagination shadow-none bg-white justify-content-end mx-3">
+                <!-- Pagination controls will be populated here dynamically -->
             </div>
-
         </div>
     </div>
 </div>
 
-@section Scripts{
+@section Scripts {
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="/js/product.js"></script>
+    <script src="~/js/category.js"></script> <!-- Reference to your JavaScript file -->
 }

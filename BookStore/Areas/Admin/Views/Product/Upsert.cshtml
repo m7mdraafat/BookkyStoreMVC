@@ -1,10 +1,10 @@
 ﻿@model ProductVM
 
-<div class="card shadow border-0 mt-5">
-    <div class="card-header-tabs bg-baby-blue">
+<div class="card shadow-lg border-top-0 border-secondary rounded-5" style="margin:7%">
+    <div class="card-header bg-primary text-white">
         <div class="row text-center">
             <div class="text-center">
-                <h2 class="py-2" style="text-transform:uppercase">@(Model.Product.Id!=0?"Update":"Create") Product</h2>
+                <h2 class="p-2" style="text-transform:uppercase">@(Model.Product.Id!=0?"Update":"Create") Product</h2>
             </div>
         </div>
     </div>
@@ -18,58 +18,58 @@
                     <div class="row mb-3">
                         <div class="col-md-6">
                             <label asp-for="Product.Title" class="form-label p-0 mx-1"></label>
-                            <input asp-for="Product.Title" class="form-control" />
+                            <input asp-for="Product.Title" class="form-control input-shadow" />
                             <span asp-validation-for="Product.Title" class="text-danger"></span>
                         </div>
                         <div class="col-md-6">
                             <label asp-for="Product.Description" class="form-label p-0 mx-1"></label>
-                            <textarea asp-for="Product.Description" class="form-control" style="height:62px"></textarea>
+                            <textarea asp-for="Product.Description" class="form-control input-shadow" style="height:62px"></textarea>
                             <span asp-validation-for="Product.Description" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="row mb-3">
                         <div class="col-md-6">
                             <label asp-for="Product.ISBN" class="form-label p-0 mx-1"></label>
-                            <input asp-for="Product.ISBN" class="form-control" />
+                            <input asp-for="Product.ISBN" class="form-control input-shadow" />
                             <span asp-validation-for="Product.ISBN" class="text-danger"></span>
                         </div>
                         <div class="col-md-6">
                             <label asp-for="Product.Author" class="form-label p-0 mx-1"></label>
-                            <input asp-for="Product.Author" class="form-control" />
+                            <input asp-for="Product.Author" class="form-control input-shadow" />
                             <span asp-validation-for="Product.Author" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="row mb-3">
                         <div class="col-md-6">
                             <label asp-for="Product.ListPrice" class="form-label p-0 mx-1"></label>
-                            <input asp-for="Product.ListPrice" class="form-control" />
+                            <input asp-for="Product.ListPrice" class="form-control input-shadow" />
                             <span asp-validation-for="Product.ListPrice" class="text-danger"></span>
                         </div>
                         <div class="col-md-6">
                             <label asp-for="Product.Price" class="form-label p-0 mx-1"></label>
-                            <input asp-for="Product.Price" class="form-control" />
+                            <input asp-for="Product.Price" class="form-control input-shadow" />
                             <span asp-validation-for="Product.Price" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="row mb-3">
                         <div class="col-md-6">
                             <label asp-for="Product.Price50" class="form-label p-0 mx-1"></label>
-                            <input asp-for="Product.Price50" class="form-control" />
+                            <input asp-for="Product.Price50" class="form-control input-shadow" />
                             <span asp-validation-for="Product.Price50" class="text-danger"></span>
                         </div>
                         <div class="col-md-6">
                             <label asp-for="Product.Price100" class="form-label p-0 mx-1"></label>
-                            <input asp-for="Product.Price100" class="form-control" />
+                            <input asp-for="Product.Price100" class="form-control input-shadow" />
                             <span asp-validation-for="Product.Price100" class="text-danger"></span>
                         </div>
                         <div class="col-md-6">
                             <label asp-for="Product.ImageUrl" class="form-label p-0 mx-1 my-2"></label>
-                            <input type="file" name="file" class="form-control" />
+                            <input type="file" name="file" class="form-control input-shadow" />
                             <span asp-validation-for="Product.Price100" class="text-danger"></span>
                         </div>
                         <div class="col-md-6">
                             <label asp-for="Product.CategoryId" class="form-label p-0 mx-1 my-2">Category</label>
-                            <select asp-for="Product.CategoryId" class="form-select shadow-sm" asp-items="@Model.CategoryList">
+                            <select asp-for="Product.CategoryId" class="form-select  input-shadow" asp-items="@Model.CategoryList">
                                 <option disabled>--Select Category--</option>
                                 @if (Model.Product.Id != 0)
                                 {
@@ -91,12 +91,12 @@
                          style="border-radius:5px; border:1px solid #bbb9b9"/>
                     <div class="row  mt-3">
                         <div class="mt-3">
-                            <button type="submit" class="btn btn-outline-primary bg-baby-blue form-control">
+                            <button type="submit" class="btn btn-primary input-shadow form-control">
                                 @(Model.Product.Id != 0 ? "Update" : "Create")
                             </button>
                         </div>
                         <div class="mt-3">
-                            <a asp-controller="Product" asp-action="Index" class="btn border-1 btn-primary-secondary shadow-sm form-control">
+                            <a asp-controller="Product" asp-action="Index" class="btn border-1 btn-secondary input-shadow shadow-sm form-control">
                                 Back To List
                             </a>
                         </div>
