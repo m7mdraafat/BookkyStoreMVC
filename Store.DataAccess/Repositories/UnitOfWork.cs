@@ -14,7 +14,7 @@ namespace Store.DataAccess.Repositories
         public ICategoryRepository CategoryRepository { get; private set; }
         public IProductRepository ProductRepository { get; private set; }
         public ICompanyRepository CompanyRepository { get; private set; }
-
+        public IApplicationUserRepository ApplicationUserRepository { get; private set; }
         public IShoppingCardRepository ShoppingCardRepository { get; private set; }
 
         public UnitOfWork(AppDbContext db)
@@ -24,6 +24,7 @@ namespace Store.DataAccess.Repositories
             ProductRepository = new ProductRepository(_db);
             CompanyRepository = new CompanyRepository(_db);
             ShoppingCardRepository = new ShoppingCardRepository(_db);
+            ApplicationUserRepository = new ApplicationUserRepository(_db);
         }
 
         public void Save()
