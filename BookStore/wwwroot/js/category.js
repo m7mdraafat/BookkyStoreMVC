@@ -50,10 +50,10 @@ function populateCategoryCards(categories) {
                         <h5 class="card-title text-dark">${category.name}</h5>
                         <p class="card-text">Display Order: ${category.displayOrder}</p>
                         <div class="d-flex justify-content-between">
-                            <a href="/admin/Category/Edit/${category.id}" class="btn text-white btn-primary ">
+                            <a href="/admin/Category/Edit/${category.id}" class="btn bg-gradient text-white btn-primary ">
                                 <i class="bi bi-pencil-square"></i> Edit
                             </a>
-                            <button onClick="deleteCategory('/admin/Category/Delete/${category.id}')" class="btn btn-outline-danger">
+                            <button onClick="deleteCategory('/admin/Category/Delete/${category.id}')" class="btn  btn-outline-danger">
                                 <i class="bi bi-trash-circle"></i> Delete
                             </button>
                         </div>

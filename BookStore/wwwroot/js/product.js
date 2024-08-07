@@ -47,8 +47,10 @@ function populateProductCards(products) {
                         <p class="card-text"><b>Price: </b>$${product.price}</p>
                         <p class="card-text"><b>Category:</b> ${product.category.name}</p>
                         <div class = "d-flex justify-content-between">
-                            <a href="/admin/product/upsert/${product.id}" class="btn btn-primary">Edit</a>
-                            <button onClick="Delete('/admin/product/delete/${product.id}')" class="btn btn-outline-danger">Delete</button>
+                            <a href="/admin/product/upsert/${product.id}" class="btn bg-gradient btn-primary"> <i class="bi bi-pencil-square"></i> Edit</a>
+                            <button onClick="Delete('/admin/product/delete/${product.id}')" class="btn bg-gradient btn-outline-danger">
+                                            <i class="bi bi-trash-circle"></i> Delete
+                            </button>
                       </div>
                 </div>
             </div>`;
