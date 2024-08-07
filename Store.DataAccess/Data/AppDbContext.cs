@@ -11,6 +11,7 @@ namespace Store.DataAccess.Data
         public DbSet<Product> Products { get; set; }
         public DbSet<Company> Companies { get; set; }
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
+        public DbSet<ShoppingCard> ShoppingCards { get; set; }
         public AppDbContext(DbContextOptions options) : base(options)
         {
         }
