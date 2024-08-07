@@ -17,23 +17,39 @@ namespace Store.DataAccess.Data.Config
             builder.Property(x=>x.Id).IsRequired();
 
             builder.Property(x => x.Name)
-                   .HasColumnType("NVARCHAR").IsRequired();
+                   .HasColumnType("NVARCHAR")
+                   .HasMaxLength(255)
+                   .IsRequired();
 
             builder.Property(x => x.StreetAddress)
-                   .HasColumnType("NVARCHAR");
-
-            builder.Property(x => x.State)
-                   .HasColumnType("NVARCHAR");
+                   .HasColumnType("NVARCHAR")
+                   .HasMaxLength(255)
+                   .IsRequired(false);
 
             builder.Property(x => x.City)
-                   .HasColumnType("NVARCHAR");
+                   .HasColumnType("NVARCHAR")
+                   .HasMaxLength(255)
+                   .IsRequired(false);
+
+            builder.Property(x => x.State)
+                   .HasColumnType("NVARCHAR")
+                   .HasMaxLength(255)
+                   .IsRequired(false);
 
             builder.Property(x => x.PostalCode)
-                   .HasColumnType("NVARCHAR");
-
+                   .HasColumnType("VARCHAR")
+                   .HasMaxLength(25)
+                   .IsRequired(false);
 
             builder.Property(x => x.PhoneNumber)
-                   .HasColumnType("NVARCHAR");
+                   .HasColumnType("NVARCHAR")
+                   .HasMaxLength(255)
+                   .IsRequired(false);
+
+            builder.HasMany(x => x.Users)
+                   .WithOne(x => x.Company)
+                   .HasForeignKey(x => x.CompanyId)
+                   .IsRequired(false); 
 
             builder.ToTable("Companies");
         }

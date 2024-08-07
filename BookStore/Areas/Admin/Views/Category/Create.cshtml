@@ -8,32 +8,35 @@
             </div>
         </div>
     </div>
-    <div class="card-body p-4">
-        <form asp-action="Create" method="post" class="row">
+    <div class="card-body p-5">
+        <div class="row pt-3 ">
+            <div class="col-md-12 ">
+                <form asp-action="Create" method="post" class="row">
 
-            @* <div asp-validation-summary="ModelOnly"></div> *@
-            <div class="mb-2 row  p-1 mx-1">
-                <label asp-for="Name" class="form-label p-0 mx-1"></label>
-                <input asp-for="Name" class="form-control input-shadow" />
-                <span asp-validation-for="Name" class="text-danger"></span>
+                    @* <div asp-validation-summary="ModelOnly"></div> *@
+                    <div class="form-floating mb-3 p-1 col-md-12">
+                        <input asp-for="Name" class="form-control input-shadow" />
+                        <label asp-for="Name" class="form-label sm-2 text-muted"></label>
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    <div class="form-floating mb-3 p-1 col-md-12">
+                        <input asp-for="DisplayOrder" class="form-control input-shadow" />
+                        <label asp-for="DisplayOrder" class="form-label sm-2 text-muted"></label>
+                        <span asp-validation-for="DisplayOrder" class="text-danger"></span>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <button type="submit" class="btn btn-primary form-control input-shadow">Create</button>
+                        </div>
+                        <div class="col-md-2">
+                            <a asp-controller="Category" asp-action="Index" class="btn border-1 btn-secondary input-shadow form-control">
+                                Back To List
+                            </a>
+                        </div>
+                    </div>
+                </form>
             </div>
-            <div class="mb-3 row p-1 mx-1">
-                <label asp-for="DisplayOrder" class="form-label p-0 mx-1 "></label>
-                <input asp-for="DisplayOrder" class="form-control input-shadow" />
-                <span asp-validation-for="DisplayOrder" class="text-danger"></span>
-
-            </div>
-            <div class="row mx-1">
-                <div class="col-6 col-md-2">
-                    <button type="submit" class="btn btn-primary form-control bg-gradient input-shadow">Create</button>
-                </div>
-                <div class="col-6 col-md-2">
-                    <a asp-controller="Category" asp-action="Index" class="btn border-1 btn-secondary input-shadow shadow-sm form-control">
-                        Back To List
-                    </a>
-                </div>
-            </div>
-        </form>
+        </div>
     </div>
 </div>
 

@@ -72,4 +72,9 @@ body, html {
 .divider-text:before,
 .divider-text:after{
     flex:1;
+    color:lightgrey;
+    content:"";
+    border-bottom:1px solid #555;
+    margin: auto 0.25rem;
+    box-shadow: 0 -2px;
 }
