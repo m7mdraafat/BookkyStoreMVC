@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using Store.Utility
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -27,29 +28,42 @@
                                 Home
                             </a>
                         </li>
-
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Content Management</a>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" style="color:white" asp-area="Admin" asp-controller="Category" asp-action="Index">Category</a>
-                                <a class="dropdown-item" style="color:white" asp-area="Admin" asp-controller="Product" asp-action="Index">Product</a>
-                                <a class="dropdown-item" style="color:white" href="#">Something else here</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">Separated link</a>
-                            </div>
-                        </li>
+                        @if (User.IsInRole(SD.Role_Admin))
+                        {
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Content Management</a>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" style="color:white" asp-area="Admin" asp-controller="Category" asp-action="Index">Category</a>
+                                    <a class="dropdown-item" style="color:white" asp-area="Admin" asp-controller="Product" asp-action="Index">Product</a>
+                                    <a class="dropdown-item" style="color:white" href="#">Something else here</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="#">Separated link</a>
+                                </div>
+                            </li>
+                        }
+                        
                     </ul>
                     <partial name="_LoginPartial" />
                 </div>
             </div>
         </nav>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            <partial name="_Notification" />
-            @RenderBody()
-        </main>
+
+    <div style="min-height:100vh; display:flex; flex-direction:column;">
+        <div class="container">
+            <main role="main" class="pb-3">
+                <partial name="_Notification" />
+                @RenderBody()
+            </main>
+        </div>
+
+        <footer class="bg-dark text-center text-white" style="margin-top:auto;">
+            <p>Privacy</p>
+            <p>Privacy Terms</p>
+        </footer>
     </div>
+    
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

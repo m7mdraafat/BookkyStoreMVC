@@ -68,3 +68,8 @@ body, html {
 .card-title, .card-text {
     margin-bottom: 0.5rem;
 }
+
+.divider-text:before,
+.divider-text:after{
+    flex:1;
+}

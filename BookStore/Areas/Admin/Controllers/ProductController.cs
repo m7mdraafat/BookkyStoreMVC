@@ -1,17 +1,20 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Store.DataAccess.Repositories.IRepositories;
 using Store.Models;
 using Store.Models.Models;
 using Store.Models.Models.ViewModels;
+using Store.Utility;
 using System.Collections.Generic;
 using System.Text;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace BookStore.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles= SD.Role_Admin)]
+
     public class ProductController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
