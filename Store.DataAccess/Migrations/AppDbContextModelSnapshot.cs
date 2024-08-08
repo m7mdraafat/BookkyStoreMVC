@@ -462,7 +462,7 @@ namespace Store.DataAccess.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Store.Models.Models.ShoppingCard", b =>
+            modelBuilder.Entity("Store.Models.Models.ShoppingCart", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -486,7 +486,7 @@ namespace Store.DataAccess.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("ShoppingCards", (string)null);
+                    b.ToTable("ShoppingCarts", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -560,7 +560,7 @@ namespace Store.DataAccess.Migrations
                     b.Navigation("Category");
                 });
 
-            modelBuilder.Entity("Store.Models.Models.ShoppingCard", b =>
+            modelBuilder.Entity("Store.Models.Models.ShoppingCart", b =>
                 {
                     b.HasOne("Store.Models.Models.ApplicationUser", "ApplicationUser")
                         .WithMany()

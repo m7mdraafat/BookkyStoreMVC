@@ -12,8 +12,8 @@ using Store.DataAccess.Data;
 namespace Store.DataAccess.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240807233210_AddShoppingCardsTable")]
-    partial class AddShoppingCardsTable
+    [Migration("20240807234730_AddShoppingCartsTable")]
+    partial class AddShoppingCartsTable
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -465,7 +465,7 @@ namespace Store.DataAccess.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Store.Models.Models.ShoppingCard", b =>
+            modelBuilder.Entity("Store.Models.Models.ShoppingCart", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -489,7 +489,7 @@ namespace Store.DataAccess.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("ShoppingCards", (string)null);
+                    b.ToTable("ShoppingCarts", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -563,7 +563,7 @@ namespace Store.DataAccess.Migrations
                     b.Navigation("Category");
                 });
 
-            modelBuilder.Entity("Store.Models.Models.ShoppingCard", b =>
+            modelBuilder.Entity("Store.Models.Models.ShoppingCart", b =>
                 {
                     b.HasOne("Store.Models.Models.ApplicationUser", "ApplicationUser")
                         .WithMany()

@@ -24,9 +24,20 @@ namespace Store.DataAccess.Repositories
             dbSet.Add(entity);
         }
 
-        public T Get(Expression<Func<T, bool>> filter, string? IncludeProperties = null)
+        public T Get(Expression<Func<T, bool>> filter, string? IncludeProperties = null, bool tracked = false)
         {
-            IQueryable<T> query = dbSet;
+            IQueryable<T> query;
+
+            if (tracked)
+            {
+                query = dbSet;
+
+            }
+            else
+            {
+                query = dbSet.AsNoTracking();
+
+            }
             query = query.Where(filter);
             if (!string.IsNullOrEmpty(IncludeProperties))
             {
@@ -36,12 +47,21 @@ namespace Store.DataAccess.Repositories
                     query = query.Include(includeProp);
                 }
             }
-            return query.FirstOrDefault();
+           
+
+            return query.FirstOrDefault(); 
         }
 
-        public IEnumerable<T> GetAll(string? IncludeProperties = null)
+        
+
+        public IEnumerable<T> GetAll(Expression<Func<T, bool>>? filter, string? IncludeProperties = null)
         {
             IQueryable<T> query = dbSet;
+            if(filter  != null)
+            {
+                query = query.Where(filter);
+
+            }
             if (!string.IsNullOrEmpty(IncludeProperties))
             {
                 foreach(var includeProp in IncludeProperties.Split(new char[] { ',' },

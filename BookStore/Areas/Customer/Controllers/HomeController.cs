@@ -1,8 +1,11 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Store.DataAccess.Repositories.IRepositories;
 using Store.Models;
 using Store.Models.Models;
 using System.Diagnostics;
+using System.Security.Claims;
 
 namespace BookStore.Areas.Customer.Controllers
 {
@@ -27,8 +30,102 @@ namespace BookStore.Areas.Customer.Controllers
         [HttpGet]
         public IActionResult Details(int productId)
         {
-            Product productDetails = _unitOfWork.ProductRepository.Get(u=>u.Id == productId, IncludeProperties:"Category");
-            return View(productDetails);
+            ShoppingCart cart = new()
+            {
+                Product = _unitOfWork.ProductRepository.Get(u => u.Id == productId, IncludeProperties:"Category"),
+                Count = 1,
+                ProductId = productId
+
+            };
+            return View(cart);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize]
+        public IActionResult AddToCart(int productId)
+        {
+            try
+            {
+                var claimsIdentity = (ClaimsIdentity)User.Identity;
+                var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+                
+                var product = _unitOfWork.ProductRepository.Get(x => x.Id == productId);
+
+                if (product == null)
+                {
+                    return NotFound(); // Handle case where product with given ID is not found
+                }
+
+                // Check if there's an existing cart for the user
+                ShoppingCart cart = _unitOfWork.ShoppingCartRepository.Get(x => x.ApplicationUserId == userId && x.ProductId==productId);
+
+                if (cart != null)
+                {
+                    // Update existing shopping cart
+                    cart.Count += 1;
+                    _unitOfWork.ShoppingCartRepository.Update(cart); // Update existing cart
+                }
+                else
+                {
+                    // Create new shopping cart
+                    cart = new ShoppingCart
+                    {
+                        ApplicationUserId = userId,
+                        ProductId = productId,
+                        Count = 1
+                    };
+                    _unitOfWork.ShoppingCartRepository.Add(cart); // Add new cart
+                }
+
+                _unitOfWork.Save();
+                TempData["success"] = "Product added successfully";
+
+                return RedirectToAction("Index");
+            }
+            catch (DbUpdateException ex)
+            {
+                // Log the exception or handle specific scenarios
+                Console.WriteLine("DbUpdateException: " + ex.Message);
+                TempData["error"] = "An error occurred while adding the product to the cart.";
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                // Handle other exceptions if necessary
+                Console.WriteLine("Exception: " + ex.Message);
+                TempData["error"] = "An unexpected error occurred.";
+                return RedirectToAction("Index");
+            }
+        }
+
+
+        [HttpPost]
+        [Authorize]
+        public IActionResult Details(ShoppingCart shoppingCart)
+        {
+            var claimsIdentity = (ClaimsIdentity)User.Identity;
+            var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
+            shoppingCart.ApplicationUserId = userId;
+            ShoppingCart cartFromDb = _unitOfWork.ShoppingCartRepository.Get(x=>x.ApplicationUserId == userId &&
+            x.ProductId == shoppingCart.ProductId);
+            if (cartFromDb != null)
+            {
+                // shopping cart exists
+                cartFromDb.Count += shoppingCart.Count; // won't update without using Update method because the cart no tracked by default.
+                _unitOfWork.ShoppingCartRepository.Update(cartFromDb);
+
+            }
+            else
+            {
+                // add cart
+                _unitOfWork.ShoppingCartRepository.Add(shoppingCart);
+
+            }
+            TempData["success"] = "Cart updated successfully";
+            _unitOfWork.Save();
+
+            return RedirectToAction("Index"); 
         }
         public IActionResult Privacy()
         {

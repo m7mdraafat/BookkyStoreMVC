@@ -5,13 +5,13 @@
 namespace Store.DataAccess.Migrations
 {
     /// <inheritdoc />
-    public partial class AddShoppingCardsTable : Migration
+    public partial class AddShoppingCartsTable : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "ShoppingCards",
+                name: "ShoppingCarts",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -22,15 +22,15 @@ namespace Store.DataAccess.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ShoppingCards", x => x.Id);
+                    table.PrimaryKey("PK_ShoppingCarts", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ShoppingCards_AspNetUsers_ApplicationUserId",
+                        name: "FK_ShoppingCarts_AspNetUsers_ApplicationUserId",
                         column: x => x.ApplicationUserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ShoppingCards_Products_ProductId",
+                        name: "FK_ShoppingCarts_Products_ProductId",
                         column: x => x.ProductId,
                         principalTable: "Products",
                         principalColumn: "Id",
@@ -38,13 +38,13 @@ namespace Store.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_ShoppingCards_ApplicationUserId",
-                table: "ShoppingCards",
+                name: "IX_ShoppingCarts_ApplicationUserId",
+                table: "ShoppingCarts",
                 column: "ApplicationUserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ShoppingCards_ProductId",
-                table: "ShoppingCards",
+                name: "IX_ShoppingCarts_ProductId",
+                table: "ShoppingCarts",
                 column: "ProductId");
         }
 
@@ -52,7 +52,7 @@ namespace Store.DataAccess.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "ShoppingCards");
+                name: "ShoppingCarts");
         }
     }
 }

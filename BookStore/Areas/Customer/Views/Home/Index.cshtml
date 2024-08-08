@@ -13,11 +13,14 @@
                         <p class="card-text">@product.Author</p>
                         <p class="card-text text text-decoration-line-through">@product.ListPrice EGP</p>
                         <p class="card-text text-danger">@product.Price100 EGP</p>
-                        <button class="btn btn-outline-warning"><i class="bi bi-cart-plus"></i> Add to cart</button>
-                        <br />
+                        <form asp-action="AddToCart" method="post">
+                            <input type="hidden" name="productId" value="@product.Id" />
+                            <button type="submit" class="btn btn-outline-warning">
+                                <i class="bi bi-cart-plus"></i> Add to cart
+                            </button>
+                        </form>
                         <a class="btn btn-outline-primary col-md-6 mt-2" asp-action="Details"
-                            asp-route-productId="@product.Id" > <i class="bi bi-eye"></i> Details</a>
-
+                           asp-route-productId="@product.Id"> <i class="bi bi-eye"></i> Details</a>
                     </div>
                 </div>
             </div>
@@ -34,5 +37,3 @@
         </button>
     </div>
 </div>
-
-

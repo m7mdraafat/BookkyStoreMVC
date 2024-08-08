@@ -4,15 +4,15 @@ using Store.Models.Models;
 using Microsoft.EntityFrameworkCore; 
 namespace Store.DataAccess.Repositories
 {
-    public class ShoppingCardRepository : Repository<ShoppingCard>, IShoppingCardRepository
+    public class ShoppingCartRepository : Repository<ShoppingCart>, IShoppingCartRepository
     {
         private readonly AppDbContext _db;
-        public ShoppingCardRepository(AppDbContext dbContext) : base(dbContext)
+        public ShoppingCartRepository(AppDbContext dbContext) : base(dbContext)
         {
             _db = dbContext;
         }
 
-        public void Update(ShoppingCard shoppingCard)
+        public void Update(ShoppingCart shoppingCard)
         {
             _db.Entry(shoppingCard).State = EntityState.Modified;
             _db.SaveChanges();

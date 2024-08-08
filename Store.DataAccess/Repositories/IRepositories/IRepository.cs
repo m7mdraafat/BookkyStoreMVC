@@ -9,9 +9,9 @@ namespace Store.DataAccess.Repositories.IRepositories
 {
     public interface IRepository<T> where T : class
     {
-        T Get(Expression<Func<T, bool>> filter, string? IncludeProperties = null);
+        T Get(Expression<Func<T, bool>> filter, string? IncludeProperties = null, bool tracked = false);
         //Task<IEnumerable<T>> GetAllAsync();
-        IEnumerable<T> GetAll(string? IncludeProperties = null);
+        IEnumerable<T> GetAll(Expression<Func<T, bool>>? filter =null ,string? IncludeProperties = null);
         void Remove(T entity);
         void RemoveRange(IEnumerable<T> entities);
         void Add(T entity);
