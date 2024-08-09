@@ -151,7 +151,7 @@ namespace BookStore.Areas.Customer.Controllers
             var totalPages = (int)Math.Ceiling((double)totalProducts / pageSize);
 
             var cardsHtml = products.Select(p => $@"
-        <div class='col-md-3 col-sm-6 border-primary'>
+             <div class='col-md-3 col-sm-6 border-primary'>
             <div class='card h-100 border-white border-1 rounded-4 shadow-lg'>
                 <img src='{p.ImageUrl}' class='card-img-top rounded-4 card-shadow'/>
                 <div class='card-body text-center'>

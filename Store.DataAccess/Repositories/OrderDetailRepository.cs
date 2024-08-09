@@ -25,20 +25,4 @@ namespace Store.DataAccess.Repositories
             _dbContext.SaveChanges();
         }
     }
-
-    public class OrderHeaderRepository : Repository<OrderHeader>, IOrderHeaderRepository
-    {
-        private readonly AppDbContext _dbContext;
-
-        public OrderHeaderRepository(AppDbContext dbContext) : base(dbContext)
-        {
-            _dbContext = dbContext;
-        }
-
-        public void Update(OrderHeader orderHeader)
-        {
-            _dbContext.Entry(orderHeader).State = EntityState.Modified;
-            _dbContext.SaveChanges();
-        }
-    }
 }

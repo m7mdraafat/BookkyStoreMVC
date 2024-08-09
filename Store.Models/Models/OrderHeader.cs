@@ -27,7 +27,10 @@ namespace Store.Models.Models
 
         public DateTime PaymentDate { get; set; }
         public DateOnly PaymentDueDate { get; set; }
-        public string? PaymentIntentId { get; set; }
+
+        public string? SessionId { get; set; }
+        public string? PaymentIntentId { get; set; } // create if the session is successful
+
 
         [Required]
         public string Name { get; set; }
