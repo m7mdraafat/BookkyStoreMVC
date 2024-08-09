@@ -7,6 +7,7 @@ using Store.Models.Models;
 using Store.Utility;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Stripe;
+using Stripe.BillingPortal;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,7 +20,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
-builder.Services.Configure<PaymobSettings>(builder.Configuration.GetSection("Stripe"));
+builder.Services.Configure<StripeSettings>(builder.Configuration.GetSection("Stripe"));
 
 // Identity configuration with custom ApplicationUser class
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
@@ -58,8 +59,7 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
-StripeConfiguration.ApiKey = builder.Configuration
-    .GetSection("Stripe:SecrectKey").Get<string>();
+StripeConfiguration.ApiKey = builder.Configuration.GetSection("Stripe:SecretKey").Value;
 
 app.UseRouting();
 app.UseAuthentication(); // Check if username or password is valid
