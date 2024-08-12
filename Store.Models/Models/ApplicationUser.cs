@@ -16,6 +16,9 @@ namespace Store.Models.Models
         public string? City { get; set; }
         public string? PostalCode { get; set; }
         public string? State {  get; set; }
+
+        [Required]
+        public string Discriminator { get; set; }
         public int? CompanyId { get; set; }
         [ValidateNever]
         public Company? Company { get; set; }

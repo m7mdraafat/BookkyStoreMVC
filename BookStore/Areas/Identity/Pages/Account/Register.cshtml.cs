@@ -108,7 +108,7 @@ namespace BookStore.Areas.Identity.Pages.Account
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
 
-            public string? Role { get; set; }
+            public string? Role { get; set; } 
             public string? StreetAddress { get; set; }
             public string? State { get; set; }
             
@@ -172,7 +172,7 @@ namespace BookStore.Areas.Identity.Pages.Account
                 user.PhoneNumber = Input.PhoneNumber;
                 user.State = Input.State;
                 user.Name = Input.FullName;
-
+                user.Discriminator = Input.Role;
                 if(Input.Role == SD.Role_Company)
                 {
                     user.CompanyId = Input.CompanyId;
