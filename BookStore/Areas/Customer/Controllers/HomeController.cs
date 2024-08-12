@@ -67,6 +67,9 @@ namespace BookStore.Areas.Customer.Controllers
                     // Update existing shopping cart
                     cart.Count += 1;
                     _unitOfWork.ShoppingCartRepository.Update(cart); // Update existing cart
+                    _unitOfWork.Save();
+
+
                 }
                 else
                 {
@@ -78,12 +81,17 @@ namespace BookStore.Areas.Customer.Controllers
                         Count = 1
                     };
                     _unitOfWork.ShoppingCartRepository.Add(cart); // Add new cart
+
+                    _unitOfWork.Save();
+
+                    // add session
+                    HttpContext.Session.SetInt32(SD.SessionCart,
+                    _unitOfWork.ShoppingCartRepository.GetAll(x => x.ApplicationUserId == userId).Count());
+
                 }
 
-                _unitOfWork.Save();
                 TempData["success"] = "Product added successfully";
-                HttpContext.Session.SetInt32(SD.SessionCart,
-                    _unitOfWork.ShoppingCartRepository.Get(x => x.ApplicationUserId == userId).Count);
+                
                 return RedirectToAction("Index");
             }
             catch (DbUpdateException ex)
@@ -117,16 +125,22 @@ namespace BookStore.Areas.Customer.Controllers
                 // shopping cart exists
                 cartFromDb.Count += shoppingCart.Count; // won't update without using Update method because the cart no tracked by default.
                 _unitOfWork.ShoppingCartRepository.Update(cartFromDb);
+                _unitOfWork.Save();
+
 
             }
             else
             {
                 // add cart
                 _unitOfWork.ShoppingCartRepository.Add(shoppingCart);
+                _unitOfWork.Save();
+
+                // add session
+                HttpContext.Session.SetInt32(SD.SessionCart,
+                _unitOfWork.ShoppingCartRepository.GetAll(x => x.ApplicationUserId == userId).Count());
 
             }
             TempData["success"] = "Cart updated successfully";
-            _unitOfWork.Save();
 
             return RedirectToAction("Index"); 
         }
