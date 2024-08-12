@@ -7,7 +7,6 @@ using Store.Models.Models;
 using Store.Utility;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Stripe;
-using Stripe.BillingPortal;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -33,6 +32,15 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.LoginPath = $"/Identity/Account/Login";
     options.LogoutPath = $"/Identity/Account/Logout";
 
+});
+
+// adding session to services
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(100);
+    options.Cookie.HttpOnly = true; 
+    options.Cookie.IsEssential = true;
 });
 // Register repositories
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
@@ -64,6 +72,8 @@ StripeConfiguration.ApiKey = builder.Configuration.GetSection("Stripe:SecretKey"
 app.UseRouting();
 app.UseAuthentication(); // Check if username or password is valid
 app.UseAuthorization();  // Check if the user has access to the page
+app.UseSession(); 
+
 app.MapRazorPages();
 
 app.MapControllerRoute(

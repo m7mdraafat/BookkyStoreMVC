@@ -1,9 +1,11 @@
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Store.DataAccess.Repositories.IRepositories;
 using Store.Models;
 using Store.Models.Models;
+using Store.Utility;
 using System.Diagnostics;
 using System.Security.Claims;
 
@@ -80,7 +82,8 @@ namespace BookStore.Areas.Customer.Controllers
 
                 _unitOfWork.Save();
                 TempData["success"] = "Product added successfully";
-
+                HttpContext.Session.SetInt32(SD.SessionCart,
+                    _unitOfWork.ShoppingCartRepository.Get(x => x.ApplicationUserId == userId).Count);
                 return RedirectToAction("Index");
             }
             catch (DbUpdateException ex)
