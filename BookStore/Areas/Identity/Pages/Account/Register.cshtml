@@ -1,11 +1,22 @@
 ﻿@page
+@using Store.Utility
 @model RegisterModel
 
 <div class="card shadow border-0 mt-4 rounded-3">
     <div class="card-header bg-primary ml-0 py-4">
         <div class="row">
             <div class="col-12 text-center">
-                <h2 class="py-2 text-white">Register</h2>
+                <h2 class="py-2 text-white">
+                    @if (User.IsInRole(SD.Role_Admin))
+                    {
+                        <h2 class="py-2 text-white"> Register - ADMIN PORTAL</h2>
+                    }
+                    else
+                    {
+                        <h2 class="py-2 text-white"> Register - ADMIN PORTAL</h2>
+
+                    }
+                </h2>
             </div>
         </div>
     </div>
@@ -60,12 +71,16 @@
                         <label asp-for="Input.PhoneNumber" class="ms-2 text-muted">Phone Number</label>
                         <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
                     </div>
-                    <div class="form-floating mb-3 col-md-6 ">
-                        <select asp-for="Input.Role" asp-items="@Model.Input.RoleList" class="form-select input-shadow p-3">
-                            <option disabled selected>-Select Role-</option>
-                        </select>
+                    @if (User.IsInRole(SD.Role_Admin))
+                    {
+                        <div class="form-floating mb-3 col-md-6 ">
+                            <select asp-for="Input.Role" asp-items="@Model.Input.RoleList" class="form-select input-shadow p-3">
+                                <option disabled selected>-Select Role-</option>
+                            </select>
 
-                    </div>
+                        </div>
+                    }
+                    
                     <div class="form-floating mb-3 col-md-6 ">
                         <select asp-for="Input.CompanyId" asp-items="@Model.Input.CompanyList" style="display:none" class="form-select input-shadow p-3">
                             <option disabled selected>-Select Company-</option>
@@ -77,38 +92,44 @@
                     </div>
                 </form>
             </div>
-            <div class="col-md-12 p-3 text-center">
-                <section>
-                    <p class="divider-text d-flex pt-3">or</p>
+            @if (!User.IsInRole(SD.Role_Admin))
+            {
+                <div class="col-md-12 p-3 text-center">
+                    <section>
+                        <p class="divider-text d-flex pt-3">or</p>
 
-                    @{
-                        if ((Model.ExternalLogins?.Count ?? 0) == 0)
-                        {
+                        @{
+                            if ((Model.ExternalLogins?.Count ?? 0) == 0)
+                            {
+                                <div>
+                                    <p>
+                                        There are no external authentication services configured. See this <a href="https://go.microsoft.com/fwlink/?LinkID=532715">
+                                            article
+                                            about setting up this ASP.NET application to support logging in via external services
+                                        </a>.
+                                    </p>
+                                </div>
+                            }
+                            else
+                            {
+                                <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
                                     <div>
                                         <p>
-                                            There are no external authentication services configured. See this <a href="https://go.microsoft.com/fwlink/?LinkID=532715">
-                                                article
-                                                about setting up this ASP.NET application to support logging in via external services
-                                            </a>.
+                                            @foreach (var provider in Model.ExternalLogins!)
+                                            {
+                                                <button type="submit" class="btn text-uppercase" style="width:15%; background-color:#4267B2; color:white; " name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">
+                                                    <i class="bi bi-facebook facebook-icon"></i> @provider.DisplayName
+                                                </button>
+                                            }
                                         </p>
                                     </div>
+                                </form>
+                            }
                         }
-                        else
-                        {
-                                    <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
-                                        <div>
-                                            <p>
-                                                @foreach (var provider in Model.ExternalLogins!)
-                                        {
-                                                    <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
-                                        }
-                                            </p>
-                                        </div>
-                                    </form>
-                        }
-                    }
-                </section>
-            </div>
+                    </section>
+                </div>
+
+            }
         </div>
 
     </div>
