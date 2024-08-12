@@ -48,25 +48,33 @@ namespace BookStore.Areas.Customer.Controllers
         }
         public IActionResult Minus(int cartId)
         {
-            var cartFromDb = _unitOfWork.ShoppingCartRepository.Get(x => x.Id == cartId);
+            var cartFromDb = _unitOfWork.ShoppingCartRepository.Get(x => x.Id == cartId, tracked: true);
             if (cartFromDb.Count <= 1)
             {
                 // remove from cart
+                HttpContext.Session.SetInt32(SD.SessionCart,
+                _unitOfWork.ShoppingCartRepository.GetAll(u => u.ApplicationUserId == cartFromDb.ApplicationUserId).Count() - 1);
                 _unitOfWork.ShoppingCartRepository.Remove(cartFromDb);
+
             }
+
             else
             {
                 cartFromDb.Count -= 1;
                 _unitOfWork.ShoppingCartRepository.Update(cartFromDb);
 
             }
-            _unitOfWork.Save();
+        
+            _unitOfWork.Save();     
             return RedirectToAction(nameof(Index));
         }
 
         public IActionResult Remove(int cartId)
         {
-            var cartFromDb = _unitOfWork.ShoppingCartRepository.Get(x => x.Id == cartId);
+            var cartFromDb = _unitOfWork.ShoppingCartRepository.Get(x => x.Id == cartId, tracked: true);
+            HttpContext.Session.SetInt32(SD.SessionCart,
+            _unitOfWork.ShoppingCartRepository
+                       .GetAll(u => u.ApplicationUserId == cartFromDb.ApplicationUserId).Count() - 1);
             _unitOfWork.ShoppingCartRepository.Remove(cartFromDb);
             _unitOfWork.Save();
             return RedirectToAction(nameof(Index));
