@@ -211,7 +211,7 @@ namespace BookStore.Areas.Customer.Controllers
             return RedirectToAction(nameof(OrderConfirmation), new { id = ShoppingCartVM.OrderHeader.Id });
         }
 
-        public IActionResult OrderConfirmation(int id)
+        public IActionResult  OrderConfirmation(int id)
         {
             OrderHeader orderHeader = _unitOfWork.OrderHeaderRepository.Get(o => o.Id == id, IncludeProperties: "ApplicationUser");
             if (orderHeader.PaymentStatus != SD.PaymentStatusDelayedPayment)
@@ -228,6 +228,7 @@ namespace BookStore.Areas.Customer.Controllers
                     _unitOfWork.OrderHeaderRepository.UpdateStatus(id, SD.StatusApproved, SD.PaymentStatusApproved);
                     _unitOfWork.Save(); 
                 }
+                HttpContext.Session.Clear(); 
             }
 
             // get current products from shopping cart and remove them.
