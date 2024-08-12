@@ -34,6 +34,12 @@ builder.Services.ConfigureApplicationCookie(options =>
 
 });
 
+// allow register using facebook
+builder.Services.AddAuthentication().AddFacebook(option =>
+{
+    option.AppId = "465720716310103";
+    option.AppSecret = "4de2dc1d90d5606e9eb417f750fbc8c2";
+});
 // adding session to services
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options =>
