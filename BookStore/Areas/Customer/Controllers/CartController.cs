@@ -166,8 +166,7 @@ namespace BookStore.Areas.Customer.Controllers
             {
                 // it is a regular customer account and we need to capture payment
                 // stripe payment logic
-                var domain = "https://localhost:7254/";
-
+                var domain = Request.Scheme + "://" + Request.Host.Value + "/";
                 // create session options
                 var options = new SessionCreateOptions
                 {

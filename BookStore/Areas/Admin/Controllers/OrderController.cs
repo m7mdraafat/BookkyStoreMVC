@@ -146,7 +146,7 @@ namespace BookStore.Areas.Admin.Controllers
                 .GetAll(u => u.OrderHeaderId == OrderVM.OrderHeader.Id, IncludeProperties: "Product");
 
 
-            var domain = "https://localhost:7254/";
+            var domain = Request.Scheme + "://" + Request.Host.Value + "/";
 
             // create session options
             var options = new SessionCreateOptions

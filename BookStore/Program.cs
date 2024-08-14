@@ -16,8 +16,10 @@ builder.Services.AddControllersWithViews();
 // Configure the DbContext to use SQL Server
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("ProductionConnection"));
 });
+
+
 
 builder.Services.Configure<StripeSettings>(builder.Configuration.GetSection("Stripe"));
 
