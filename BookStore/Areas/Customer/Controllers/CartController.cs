@@ -113,20 +113,16 @@ namespace BookStore.Areas.Customer.Controllers
         [ActionName("Summary")]
         public IActionResult SummaryPOST()
         {
-            // get current logined user claims 
             var claimsIdentity = (ClaimsIdentity)User.Identity;
             var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
 
-            ShoppingCartVM.ShoppingCartList = _unitOfWork.ShoppingCartRepository.GetAll(u => u.ApplicationUserId == userId
-                , IncludeProperties: "Product");
-
+            ShoppingCartVM.ShoppingCartList = _unitOfWork.ShoppingCartRepository.GetAll(u => u.ApplicationUserId == userId, IncludeProperties: "Product");
 
             ShoppingCartVM.OrderHeader.OrderDate = DateTime.Now;
             ShoppingCartVM.OrderHeader.ApplicationUserId = userId;
 
-            ApplicationUser applicationUser = _unitOfWork.ApplicationUserRepository.Get(u => u.Id == userId);
+            var applicationUser = _unitOfWork.ApplicationUserRepository.Get(u => u.Id == userId);
 
-            // calculate total price
             foreach (var cart in ShoppingCartVM.ShoppingCartList)
             {
                 cart.Price = GetPriceBasedOnQuantity(cart);
@@ -135,54 +131,36 @@ namespace BookStore.Areas.Customer.Controllers
 
             if (applicationUser.CompanyId.GetValueOrDefault() == 0)
             {
-                // it is a regular customer 
                 ShoppingCartVM.OrderHeader.PaymentStatus = SD.PaymentStatusPending;
                 ShoppingCartVM.OrderHeader.OrderStatus = SD.StatusPending;
-
             }
             else
             {
-                // it is a company user
                 ShoppingCartVM.OrderHeader.PaymentStatus = SD.PaymentStatusDelayedPayment;
                 ShoppingCartVM.OrderHeader.OrderStatus = SD.StatusApproved;
             }
+
             _unitOfWork.OrderHeaderRepository.Add(ShoppingCartVM.OrderHeader);
             _unitOfWork.Save();
 
-            // create order details from Current shopping cart, and save it into database
-            foreach (var cart in ShoppingCartVM.ShoppingCartList)
-            {
-                OrderDetail orderDetail = new()
-                {
-                    ProductId = cart.ProductId,
-                    OrderHeaderId = ShoppingCartVM.OrderHeader.Id,
-                    Price = cart.Price,
-                    Count = cart.Count,
-                };
-                _unitOfWork.OrderDetailRepository.Add(orderDetail);
-                _unitOfWork.Save();
-            }
             if (applicationUser.CompanyId.GetValueOrDefault() == 0)
             {
-                // it is a regular customer account and we need to capture payment
-                // stripe payment logic
                 var domain = Request.Scheme + "://" + Request.Host.Value + "/";
-                // create session options
                 var options = new SessionCreateOptions
                 {
                     SuccessUrl = domain + $"Customer/Cart/OrderConfirmation?id={ShoppingCartVM.OrderHeader.Id}",
-                    CancelUrl = domain + "Customer/Cart/Index",
+                    CancelUrl = domain + $"Customer/Cart/PaymentFailed?id={ShoppingCartVM.OrderHeader.Id}", // Set the cancel URL
                     LineItems = new List<SessionLineItemOptions>(),
                     Mode = "payment",
                 };
 
-                foreach(var cart in ShoppingCartVM.ShoppingCartList)
+                foreach (var cart in ShoppingCartVM.ShoppingCartList)
                 {
                     var sessionLineItem = new SessionLineItemOptions
                     {
-                        PriceData = new SessionLineItemPriceDataOptions()
+                        PriceData = new SessionLineItemPriceDataOptions
                         {
-                            UnitAmount = (long)(cart.Price * 100), // $20.50 => 2050
+                            UnitAmount = (long)(cart.Price * 100),
                             Currency = "egp",
                             ProductData = new SessionLineItemPriceDataProductDataOptions
                             {
@@ -194,6 +172,7 @@ namespace BookStore.Areas.Customer.Controllers
 
                     options.LineItems.Add(sessionLineItem);
                 }
+
                 var service = new SessionService();
                 Session session = service.Create(options);
 
@@ -202,13 +181,11 @@ namespace BookStore.Areas.Customer.Controllers
 
                 Response.Headers.Add("Location", session.Url);
                 return new StatusCodeResult(303);
-
-
             }
 
-            // redirect to payment page
             return RedirectToAction(nameof(OrderConfirmation), new { id = ShoppingCartVM.OrderHeader.Id });
         }
+
 
         public IActionResult  OrderConfirmation(int id)
         {
@@ -239,6 +216,30 @@ namespace BookStore.Areas.Customer.Controllers
 
             return View(id);
         }
+
+        public IActionResult PaymentFailed(int id)
+        {
+            // Fetch the OrderHeader from the database
+            var orderHeader = _unitOfWork.OrderHeaderRepository.Get(o => o.Id == id);
+
+            if (orderHeader != null)
+            {
+                // Fetch and remove related OrderDetail records
+                var orderDetails = _unitOfWork.OrderDetailRepository.GetAll(od => od.OrderHeaderId == id).ToList();
+                _unitOfWork.OrderDetailRepository.RemoveRange(orderDetails);
+
+                // Remove the OrderHeader
+                _unitOfWork.OrderHeaderRepository.Remove(orderHeader);
+
+                // Save changes to the database
+                _unitOfWork.Save();
+
+                // Set a message to inform the user
+                TempData["error"] = "Your order has been canceled as the payment was not completed.";
+            }
+            return RedirectToAction(nameof(Index));
+        }
+
         private double GetPriceBasedOnQuantity(ShoppingCart shoppingCart)
         {
             if (shoppingCart.Count <= 50)
