@@ -13,7 +13,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Store.Models.Models;
-using Store.Utility;
 
 namespace BookStore.Areas.Identity.Pages.Account.Manage
 {
@@ -21,12 +20,12 @@ namespace BookStore.Areas.Identity.Pages.Account.Manage
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
-        private readonly IMailingService _emailSender;
+        private readonly IEmailSender _emailSender;
 
         public EmailModel(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
-            IMailingService emailSender)
+            IEmailSender emailSender)
         {
             _userManager = userManager;
             _signInManager = signInManager;

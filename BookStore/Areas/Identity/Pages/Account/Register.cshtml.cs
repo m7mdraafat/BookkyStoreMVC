@@ -34,14 +34,14 @@ namespace BookStore.Areas.Identity.Pages.Account
         private readonly IUserStore<ApplicationUser> _userStore;
         private readonly IUserEmailStore<ApplicationUser> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
-        private readonly IMailingService _emailSender;
+        private readonly IEmailSender _emailSender;
         private readonly IUnitOfWork _unitOfWork;
         public RegisterModel(
             UserManager<ApplicationUser> userManager,
             IUserStore<ApplicationUser> userStore,
             SignInManager<ApplicationUser> signInManager,
             ILogger<RegisterModel> logger,
-            IMailingService emailSender,
+            IEmailSender emailSender,
             RoleManager<IdentityRole> roleManager, 
             IUnitOfWork unitOfWork)
         {
@@ -172,7 +172,7 @@ namespace BookStore.Areas.Identity.Pages.Account
                 user.PhoneNumber = Input.PhoneNumber;
                 user.State = Input.State;
                 user.Name = Input.FullName;
-                user.Discriminator = "Customer";
+                user.Discriminator = Input.Role;
                 if(Input.Role == SD.Role_Company)
                 {
                     user.CompanyId = Input.CompanyId;

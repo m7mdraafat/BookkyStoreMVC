@@ -48,7 +48,6 @@ builder.Services.AddSession(options =>
     options.Cookie.HttpOnly = true; 
     options.Cookie.IsEssential = true;
 });
-
 // Register repositories
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
@@ -57,10 +56,7 @@ builder.Services.AddScoped<ICompanyRepository, CompanyRepository>();
 builder.Services.AddScoped<IApplicationUserRepository, ApplicationUserRepository>();
 builder.Services.AddScoped<IShoppingCartRepository, ShoppingCartRepository>();
 // Register email sender service
-builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("MailSettings"));
-builder.Services.AddScoped<IMailingService, MailingService>();
-
-
+builder.Services.AddScoped<IEmailSender, EmailSender>();
 
 // Add Razor Pages
 builder.Services.AddRazorPages();
