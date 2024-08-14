@@ -1,4 +1,5 @@
-﻿@model ShoppingCartVM
+﻿@using Store.Utility
+@model ShoppingCartVM
 <form method="post">
 	<br />
 	<div class="container">
@@ -30,7 +31,7 @@
 									<label>Name</label>
 								</div>
 								<div class="col-9">
-									<input asp-for="OrderHeader.Name" class="form-control" />
+									<input id="name" asp-for="OrderHeader.Name" class="form-control" />
 									<span asp-validation-for="OrderHeader.Name" class="text-danger"></span>
 								</div>
 							</div>
@@ -39,7 +40,7 @@
 									<label>Phone</label>
 								</div>
 								<div class="col-9">
-									<input asp-for="OrderHeader.PhoneNumber" class="form-control" />
+									<input id="phonenumber" asp-for="OrderHeader.PhoneNumber" class="form-control" />
 									<span asp-validation-for="OrderHeader.PhoneNumber" class="text-danger"></span>
 								</div>
 							</div>
@@ -48,7 +49,7 @@
 									<label>Street Address</label>
 								</div>
 								<div class="col-9">
-									<input asp-for="OrderHeader.StreetAddress" class="form-control" />
+									<input id="street" asp-for="OrderHeader.StreetAddress" class="form-control" />
 									<span asp-validation-for="OrderHeader.StreetAddress" class="text-danger"></span>
 								</div>
 							</div>
@@ -57,7 +58,7 @@
 									<label>City</label>
 								</div>
 								<div class="col-9">
-									<input asp-for="OrderHeader.City" class="form-control" />
+									<input id="city" asp-for="OrderHeader.City" class="form-control" />
 									<span asp-validation-for="OrderHeader.City" class="text-danger"></span>
 								</div>
 							</div>
@@ -66,7 +67,7 @@
 									<label>State</label>
 								</div>
 								<div class="col-9">
-									<input asp-for="OrderHeader.State" class="form-control" />
+									<input id="state" asp-for="OrderHeader.State" class="form-control" />
 									<span asp-validation-for="OrderHeader.State" class="text-danger"></span>
 								</div>
 							</div>
@@ -117,10 +118,61 @@
 						</p>
 					</div>
 					<div class="col-12 col-md-4">
-						<button asp-action="Summary" type="submit" value="Place Order" class="btn btn-primary form-control">Place Order</button>
+						<button asp-action="Summary" type="submit" value="Place Order" class="btn btn-primary form-control" onclick="return validateInput()">Place Order</button>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 </form>
+
+
+
+@section Scripts {
+	<partial name="_ValidationScriptsPartial" />
+	<script>
+		function validateInput() {
+			if (document.getElementById("name").value == "") {
+				Swal.fire({
+					icon: 'error',
+					title: 'Oops...',
+					text: 'Please enter name!',
+				});
+				return false;
+			}
+			else if (document.getElementById("phonenumber").value == "") {
+				Swal.fire({
+					icon: 'error',
+					title: 'Oops...',
+					text: 'Please enter phone number!',
+				});
+				return false;
+			}
+			else if (document.getElementById("street").value == "") {
+				Swal.fire({
+					icon: 'error',
+					title: 'Oops...',
+					text: 'Please enter street address!',
+				});
+				return false;
+			}
+			else if (document.getElementById("city").value == "") {
+				Swal.fire({
+					icon: 'error',
+					title: 'Oops...',
+					text: 'Please enter city!',
+				});
+				return false;
+			}
+			else if (document.getElementById("state").value == "") {
+				Swal.fire({
+					icon: 'error',
+					title: 'Oops...',
+					text: 'Please enter state!',
+				});
+				return false;
+			}
+			return true;
+		}
+	</script>
+}

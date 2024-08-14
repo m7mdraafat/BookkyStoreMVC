@@ -7,7 +7,7 @@
         <div class="row">
             <div class="col-12 text-center">
                 <h2 class="py-2 text-white">
-                    @if (User.IsInRole(SD.Role_Admin))
+                    @if (User.IsInRole("Admin"))
                     {
                         <h2 class="py-2 text-white"> Register - ADMIN PORTAL</h2>
                     }
@@ -113,19 +113,21 @@
                             else
                             {
                                 <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
-                                    <div>
+                                    <div class="button-container">
                                         <p>
                                             @foreach (var provider in Model.ExternalLogins!)
                                             {
                                                 <button type="submit" class="btn provider-button text-uppercase" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">
-                                                    <span class="provider-icon @provider.Name"></span>
-                                                    Log in with @provider.DisplayName
+                                                    @if (provider.Name == "Google")
+                                                    {
+                                                        <img src="/Images/google.png" alt="Google" class="provider-icon" style="height: 20px; margin-right: 10px;" />
+                                                        <span class="google-text">Sign in with Google</span>
+                                                    }
                                                 </button>
                                             }
                                         </p>
                                     </div>
                                 </form>
-
                             }
                         }
                     </section>

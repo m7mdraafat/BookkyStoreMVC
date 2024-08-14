@@ -67,12 +67,16 @@
                         else
                         {
                             <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
-                                <div>
+                                <div class="button-container">
                                     <p>
                                         @foreach (var provider in Model.ExternalLogins!)
                                         {
-                                            <button type="submit" class="btn text-uppercase" style="width:15%; background-color:#4267B2; color:white; " name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">
-                                                <i class="bi bi-facebook facebook-icon"></i> @provider.DisplayName
+                                            <button type="submit" class="btn provider-button text-uppercase" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">
+                                                @if (provider.Name == "Google")
+                                                {
+                                                    <img src="/Images/google.png" alt="Google" class="provider-icon" style="height: 20px; margin-right: 10px;" />
+                                                    <span class="google-text">Sign in with Google</span>
+                                                }
                                             </button>
                                         }
                                     </p>

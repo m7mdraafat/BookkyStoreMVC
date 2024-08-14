@@ -78,3 +78,50 @@ body, html {
     margin: auto 0.25rem;
     box-shadow: 0 -2px;
 }
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 20px 0;
+}
+
+.provider-button {
+    background-color: #ffffff;
+    color: #757575; /* Light gray text */
+    border-radius: 5px;
+    padding: 10px 20px;
+    border: 1px solid #dadce0; /* Light gray border */
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+    font-size: 16px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+}
+
+    .provider-button:hover {
+        background-color: #f7f7f7; /* Slightly darker on hover */
+    }
+
+    .provider-button:focus {
+        outline: none;
+        box-shadow: 0px 0px 0px 4px rgba(66, 133, 244, 0.3); /* Focus ring */
+    }
+
+    .provider-button .provider-icon {
+        margin-right: 10px;
+        font-size: 20px;
+    }
+
+    /* Google Button Specific Styles */
+    .provider-button[value="Google"] {
+        background-color: #ffffff; /* White background */
+        color: #4285f4; /* Google Blue text */
+        border: 1px solid #dadce0;
+    }
+
+        .provider-button[value="Google"] .provider-icon {
+            content: url('C:\Users\Mohamed Raafat\source\repos\BookStoreMVC\BookStore\wwwroot\Images\google.png'); /* Path to Google Icon */
+        }

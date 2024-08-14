@@ -247,7 +247,7 @@
                             @if (Model.OrderHeader.PaymentStatus == SD.PaymentStatusDelayedPayment &&
                             Model.OrderHeader.OrderStatus == SD.StatusShipped)
                             {
-                                <button type="submit" class="btn btn-success form-control my-1"> Pay Now</button>
+                                 <button type="submit" class="btn btn-success form-control my-1">Pay Now</button>
                             }
                             @if (User.IsInRole(SD.Role_Admin) || User.IsInRole(SD.Role_Employee))
                             {
@@ -270,6 +270,7 @@
                                 {
                                     <button type="submit" asp-action="CancelOrder" class="btn btn-danger form-control my-1">Cancel Order</button>
                                 }
+
                             }
 
                         </div>
@@ -283,6 +284,8 @@
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
     <script>
+        console.log('User Roles:', '@User.IsInRole(SD.Role_Admin)', '@User.IsInRole(SD.Role_Employee)');
+        console.log('Order Status:', '@Model.OrderHeader.OrderStatus');
         function validateInput() {
             if (document.getElementById("trackingNumber").value == "") {
                 Swal.fire({
