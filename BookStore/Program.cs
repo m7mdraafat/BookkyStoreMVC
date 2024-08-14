@@ -5,8 +5,10 @@ using Store.DataAccess.Repositories.IRepositories;
 using Store.DataAccess.Repositories;
 using Store.Models.Models;
 using Store.Utility;
-using Microsoft.AspNetCore.Identity.UI.Services;
 using Stripe;
+using Store.DataAccess.DbInitializer;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.Google;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -42,6 +44,18 @@ builder.Services.AddAuthentication().AddFacebook(option =>
     option.AppId = "465720716310103";
     option.AppSecret = "4de2dc1d90d5606e9eb417f750fbc8c2";
 });
+
+// allow register using google
+
+builder.Services.AddAuthentication().AddGoogle(options =>
+{
+    IConfigurationSection googleAuthSection = builder.Configuration.GetSection("Authentication:Google");
+    options.ClientId = googleAuthSection["ClientId"];
+    options.ClientSecret = googleAuthSection["ClientSecret"]; 
+
+});
+
+
 // adding session to services
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options =>
@@ -61,7 +75,7 @@ builder.Services.AddScoped<IShoppingCartRepository, ShoppingCartRepository>();
 // Register email sender service
 builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("MailSettings"));
 builder.Services.AddScoped<IMailingService, MailingService>();
-
+builder.Services.AddScoped<IDbInitializer, DbInitilizer>();
 
 
 // Add Razor Pages
@@ -84,8 +98,8 @@ StripeConfiguration.ApiKey = builder.Configuration.GetSection("Stripe:SecretKey"
 app.UseRouting();
 app.UseAuthentication(); // Check if username or password is valid
 app.UseAuthorization();  // Check if the user has access to the page
-app.UseSession(); 
-
+app.UseSession();
+SeedDatabase();
 app.MapRazorPages();
 
 app.MapControllerRoute(
@@ -93,3 +107,13 @@ app.MapControllerRoute(
     pattern: "{area=Customer}/{controller=Home}/{action=Index}/{id?}");
 
 app.Run();
+
+
+void SeedDatabase()
+{
+    using(var scope  = app.Services.CreateScope())
+    {
+        var dbInitializer = scope.ServiceProvider.GetRequiredService<IDbInitializer>();
+        dbInitializer.Initialize();
+    }
+}

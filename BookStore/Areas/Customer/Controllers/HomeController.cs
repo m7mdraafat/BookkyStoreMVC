@@ -157,6 +157,7 @@ namespace BookStore.Areas.Customer.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
+        
         #region API Calls
         [HttpGet]
         public IActionResult GetProducts(int page = 1, int pageSize = 4)
