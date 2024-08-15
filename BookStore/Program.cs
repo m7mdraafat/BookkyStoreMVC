@@ -9,6 +9,7 @@ using Stripe;
 using Store.DataAccess.DbInitializer;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.Google;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,7 +21,6 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("ProductionConnection"));
 });
-
 
 
 builder.Services.Configure<StripeSettings>(builder.Configuration.GetSection("Stripe"));

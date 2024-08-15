@@ -119,6 +119,8 @@ namespace BookStore.Areas.Customer.Controllers
             ShoppingCartVM.ShoppingCartList = _unitOfWork.ShoppingCartRepository.GetAll(u => u.ApplicationUserId == userId, IncludeProperties: "Product");
 
             ShoppingCartVM.OrderHeader.OrderDate = DateTime.Now;
+            ShoppingCartVM.OrderHeader.ShippingDate = DateTime.Now.AddDays(4);
+
             ShoppingCartVM.OrderHeader.ApplicationUserId = userId;
 
             var applicationUser = _unitOfWork.ApplicationUserRepository.Get(u => u.Id == userId);
@@ -189,6 +191,7 @@ namespace BookStore.Areas.Customer.Controllers
 
         public IActionResult  OrderConfirmation(int id)
         {
+            
             OrderHeader orderHeader = _unitOfWork.OrderHeaderRepository.Get(o => o.Id == id, IncludeProperties: "ApplicationUser");
             if (orderHeader.PaymentStatus != SD.PaymentStatusDelayedPayment)
             {
@@ -216,6 +219,8 @@ namespace BookStore.Areas.Customer.Controllers
 
             return View(id);
         }
+
+
 
         public IActionResult PaymentFailed(int id)
         {

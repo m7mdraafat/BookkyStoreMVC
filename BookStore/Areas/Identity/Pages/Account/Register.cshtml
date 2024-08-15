@@ -80,7 +80,7 @@
                         <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
                     </div>
 
-                    @if (User.IsInRole(SD.Role_Admin))
+                   @*  @if (User.IsInRole(SD.Role_Admin))
                     {
                         <div class="form-floating mb-3 col-md-6">
                             <select asp-for="Input.Role" asp-items="@Model.Input.RoleList" class="form-select input-shadow p-3">
@@ -93,7 +93,7 @@
                         <select asp-for="Input.CompanyId" asp-items="@Model.Input.CompanyList" class="form-select input-shadow p-3">
                             <option disabled selected>-Select Company-</option>
                         </select>
-                    </div>
+                    </div> *@
 
                     <div class="col-12">
                         <button id="registerSubmit" type="submit" class="w-100 btn rounded-2 btn-lg btn-primary">Register</button>
