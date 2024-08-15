@@ -1,41 +1,102 @@
 /* Base font size */
 
 /* Footer styling */
-/* Footer Styling */
-
+/* Footer Main Styling */
 .footer-main {
-    color: #ffffff;
+    background-color: #000000; /* Dark background for the footer */
+    color: #ffffff; /* Light text color */
     text-align: center;
     font-size: 0.875rem;
     width: 100%;
-    height: 20vh;
-    bottom:0;
-    position:relative;
-    display: block;
     padding: 1rem 0;
+    position: relative;
+    bottom: 0;
+    display: block;
+    margin-top:auto;
 }
 
-/* Footer link color */
-.footer a {
-    color: #FFF; /* Warm Coral */
-    text-decoration: none; /* Remove underline */
-    /*margin: 0 0.5rem;*/ /* Reduce spacing between links */
+/* Footer Container Styling */
+.footer-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center content horizontally */
+    justify-content: center; /* Center content vertically */
 }
 
-    /* Footer link hover color */
-    .footer a:hover {
-        color: #FF6F61; /* Light Coral */
+    /* Footer Link Styling */
+    .footer-container a {
+        color: #ffffff; /* White color for links */
+        text-decoration: none; /* Remove underline */
+        margin: 0 0.5rem; /* Space between links */
+        transition: color 0.3s ease, text-decoration 0.3s ease; /* Smooth transition for color and underline */
     }
 
-/* Footer icons color */
-.footer i {
-    color: #FF6F61; /* Warm Coral */
-}
-body, html {
+        /* Privacy Link Specific Styling */
+        .footer-container a.privacy-link {
+            color: #ffffff; /* White color */
+            text-decoration: underline; /* Underline for Privacy link */
+        }
+
+            /* Privacy Link Hover Color */
+            .footer-container a.privacy-link:hover {
+                color: #FF6F61; /* Light Coral for hover effect */
+                text-decoration: underline; /* Ensure underline on hover */
+            }
+
+        /* Footer Link Hover Color */
+        .footer-container a:hover {
+            color: #FF6F61; /* Light Coral for hover effect */
+        }
+
+    /* Footer Icons Styling */
+    .footer-container i {
+        color: #ffffff; /* White color for icons by default */
+        font-size: 1.5rem; /* Adjust icon size */
+        transition: color 0.3s ease; /* Smooth transition for color change */
+    }
+
+    /* Icon Hover Effects */
+    .footer-container .bi-facebook:hover {
+        color: #1877f2; /* Facebook blue */
+    }
+
+    .footer-container .bi-github:hover {
+        color: #333; /* GitHub black */
+    }
+
+    .footer-container .bi-linkedin:hover {
+        color: #0a66c2; /* LinkedIn blue */
+    }
+
+/* Ensure footer is at the bottom of the page */
+html, body {
     height: 100%;
     margin: 0;
     display: flex;
     flex-direction: column;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Ensure the body takes at least full viewport height */
+}
+
+/* Responsive Design Adjustments */
+@media (max-width: 768px) {
+    .footer-main {
+        font-size: 0.75rem; /* Smaller font size on smaller screens */
+    }
+
+    .footer-container i {
+        font-size: 1.25rem; /* Smaller icon size on smaller screens */
+    }
+}
+
+@media (max-width: 576px) {
+    .footer-container i {
+        font-size: 1.2rem; /* Even smaller icon size on extra-small screens */
+    }
 }
 
 .wrapper {
@@ -47,7 +108,9 @@ body, html {
 .card-content {
     transition: transform 0.3s ease;
 }
-
+.content-wrapper {
+    flex: 1; /* Ensures the content area takes up the remaining space */
+}
 .card-content:hover {
     transform: scale(1.05); /* Adjust the scale factor as needed */
 }
@@ -125,3 +188,166 @@ body, html {
         .provider-button[value="Google"] .provider-icon {
             content: url('C:\Users\Mohamed Raafat\source\repos\BookStoreMVC\BookStore\wwwroot\Images\google.png'); /* Path to Google Icon */
         }
+
+
+
+
+
+
+/* Ensure the product card takes up the full width of its container */
+.product-card {
+    position: relative;
+    transition: transform 0.3s ease; /* Smooth zoom effect on hover */
+    overflow: hidden; /* Hide any overflow from scaling */
+}
+
+/* Add border to the top of the image */
+.card-img-wrapper {
+    position: relative;
+    width: 100%;
+    overflow: hidden; /* Ensure no overflow of image */
+    border-top: 5px solid #000000; /* Top border with color and thickness */
+}
+
+/* Ensure the product image takes up the full width of the card while maintaining aspect ratio */
+.card-img-top {
+    width: 100%;
+    height: auto; /* Allow height to adjust automatically to maintain aspect ratio */
+    object-fit: contain; /* Ensure the whole image is visible */
+}
+
+/* Apply zoom effect to the entire product card on hover */
+.product-card:hover {
+    transform: scale(1.05); /* Scale the entire product card up by 5% */
+}
+
+/* General card adjustments */
+.card-body {
+    padding: 1rem; /* Adjust padding for better spacing */
+}
+
+@media (max-width: 576px) {
+    .card-body {
+        padding: 0.5rem; /* Less padding on very small screens */
+    }
+
+    .btn {
+        width: 100%; /* Full width buttons for small screens */
+        text-align: center; /* Center text inside buttons */
+    }
+}
+
+@media (max-width: 768px) {
+    .card-img-top {
+        height: auto; /* Maintain aspect ratio on tablets */
+    }
+}
+
+/* Ensure buttons in the card are the same size */
+.card-body .btn {
+    width: 100%; /* Make buttons full width within their container */
+    display: block; /* Ensures the buttons take up the full width available */
+    text-align: center; /* Center text inside buttons */
+    margin-bottom: 10px; /* Space between buttons */
+}
+
+/* Adjust button styles to match the overall design */
+.btn-outline-warning, .btn-outline-primary {
+    border-radius: 0.25rem; /* Consistent border radius */
+    padding: 0.5rem 1rem; /* Consistent padding for both buttons */
+}
+
+/* Specific adjustments for different screen sizes */
+@media (max-width: 576px) {
+    .btn {
+        padding: 0.75rem 1rem; /* Adjust padding for small screens if needed */
+    }
+}
+
+
+
+/* Styling manage order page*/
+/* Ensure status buttons are stacked vertically */
+/* Ensure status buttons are stacked vertically */
+/* Styling for the dropdown menu */
+/* Styling for the dropdown menu */
+/* Styling for the dropdown menu */
+/* Container for the dropdown to position it correctly */
+.status-dropdown {
+    position: relative; /* Ensure dropdown menu is positioned relative to this container */
+}
+
+    /* Position the dropdown menu above the button */
+    .status-dropdown .dropdown-menu {
+        position: absolute; /* Position it absolutely within the relative container */
+        bottom: 100%; /* Place it above the button */
+        left: 0; /* Align it to the left side of the button */
+        width: 200px; /* Fixed width for the dropdown menu */
+        max-width: 100%; /* Ensure it doesn't exceed the container width */
+        padding: 0; /* Remove padding inside the dropdown menu */
+        margin-bottom: 0.25rem; /* Small space between the button and the dropdown menu */
+        z-index: 1000; /* Ensure it appears above other content */
+        background-color: #fff; /* Background color to match card or container */
+        border: 1px solid #ccc; /* Border to define the dropdown */
+        border-radius: 0.25rem; /* Border radius for rounded corners */
+    }
+
+    /* Ensure each dropdown item is styled consistently */
+    .status-dropdown .dropdown-item {
+        padding: 0.5rem 1rem; /* Reduced padding for a smaller dropdown */
+        text-align: left; /* Align text to the left */
+        font-size: 0.875rem; /* Smaller font size for dropdown items */
+    }
+
+        /* Background color for dropdown items on hover */
+        .status-dropdown .dropdown-item:hover {
+            background-color: #e9ecef; /* Light grey background on hover */
+            color: #000; /* Black text color on hover */
+        }
+
+        /* Background color for the active dropdown item */
+        .status-dropdown .dropdown-item.active {
+            background-color: #007bff; /* Primary color background for active item */
+            color: #fff; /* White text color for active item */
+        }
+
+    /* Additional styles for the dropdown button */
+    .status-dropdown .dropdown-toggle {
+        width: 200px; /* Match the width with the dropdown menu */
+        text-align: left; /* Align text to the left */
+        border-radius: 0.25rem; /* Border radius */
+        padding: 0.5rem 1rem; /* Adjust padding for a smaller button */
+        font-size: 0.875rem; /* Adjust font size for a smaller button */
+        display: flex; /* Use flexbox for alignment */
+        justify-content: space-between; /* Ensure content is aligned properly */
+        align-items: center; /* Center align items vertically */
+    }
+
+
+/*styling cart*/
+/* Ensure images scale correctly */
+.img-fluid {
+    max-width: 100%; /* Ensure image does not overflow */
+    height: auto; /* Maintain aspect ratio */
+}
+
+/* Adjust spacing between rows */
+.card-body .row {
+    margin-bottom: 1rem; /* Space between rows */
+}
+
+/* Adjust spacing and alignment for the button group */
+.btn-group .btn {
+    margin: 0;
+}
+
+/* Ensure the card header and footer are responsive */
+.card-header, .card-footer {
+    padding: 1rem; /* Ensure consistent padding */
+}
+
+    /* Ensure the buttons in the footer are full width */
+    .card-footer .btn {
+        width: 100%;
+    }
+

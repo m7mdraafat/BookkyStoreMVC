@@ -7,14 +7,13 @@
         <div class="row">
             <div class="col-12 text-center">
                 <h2 class="py-2 text-white">
-                    @if (User.IsInRole("Admin"))
+                    @if (User.IsInRole(SD.Role_Admin))
                     {
-                        <h2 class="py-2 text-white"> Register - ADMIN PORTAL</h2>
+                        <text>Register - ADMIN PORTAL</text>
                     }
                     else
                     {
-                        <h2 class="py-2 text-white"> Register - ADMIN PORTAL</h2>
-
+                        <text>Register</text>
                     }
                 </h2>
             </div>
@@ -22,76 +21,86 @@
     </div>
     <div class="card-body p-4">
         <div class="row pt-3">
-            <div class="col-md-12 ">
+            <div class="col-md-12">
                 <form id="registerForm" class="row" asp-route-returnUrl="@Model.ReturnUrl" method="post">
                     <h3 class="border-bottom pb-3 mb-3 text text-center">Create a new account.</h3>
                     <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
-                    <div class="form-floating mb-3 col-md-12 ">
-                        <input asp-for="Input.Email" class="form-control input-shadow" autocomplete="username" aria-required="true" placeholder="" />
+
+                    <div class="form-floating mb-3 col-md-12">
+                        <input asp-for="Input.Email" class="form-control input-shadow" autocomplete="username" aria-required="true" />
                         <label asp-for="Input.Email" class="ms-2 text-muted">Email</label>
                         <span asp-validation-for="Input.Email" class="text-danger"></span>
                     </div>
+
                     <div class="form-floating mb-3 col-md-6">
-                        <input asp-for="Input.FullName" class="form-control input-shadow" aria-required="true"  />
+                        <input asp-for="Input.FullName" class="form-control input-shadow" aria-required="true" />
                         <label asp-for="Input.FullName" class="ms-2 text-muted">Full Name</label>
                         <span asp-validation-for="Input.FullName" class="text-danger"></span>
                     </div>
+
                     <div class="form-floating mb-3 col-md-6">
                         <input asp-for="Input.Password" class="form-control input-shadow" autocomplete="new-password" aria-required="true" placeholder="password" />
                         <label asp-for="Input.Password" class="ms-2 text-muted">Password</label>
                         <span asp-validation-for="Input.Password" class="text-danger"></span>
                     </div>
+
                     <div class="form-floating mb-3 col-md-6">
                         <input asp-for="Input.ConfirmPassword" class="form-control input-shadow" autocomplete="new-password" aria-required="true" placeholder="password" />
                         <label asp-for="Input.ConfirmPassword" class="ms-2 text-muted">Confirm Password</label>
                         <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
                     </div>
-                    <div class="form-floating mb-3 col-md-6 ">
+
+                    <div class="form-floating mb-3 col-md-6">
                         <input asp-for="Input.StreetAddress" class="form-control input-shadow" autocomplete="username" placeholder="" />
                         <label asp-for="Input.StreetAddress" class="ms-2 text-muted">Street Address</label>
                         <span asp-validation-for="Input.StreetAddress" class="text-danger"></span>
                     </div>
-                    <div class="form-floating mb-3 col-md-6 ">
+
+                    <div class="form-floating mb-3 col-md-6">
                         <input asp-for="Input.City" class="form-control input-shadow" autocomplete="username" placeholder="" />
                         <label asp-for="Input.City" class="ms-2 text-muted">City</label>
                         <span asp-validation-for="Input.City" class="text-danger"></span>
                     </div>
-                    <div class="form-floating mb-3 col-md-6 ">
+
+                    <div class="form-floating mb-3 col-md-6">
                         <input asp-for="Input.State" class="form-control input-shadow" autocomplete="username" placeholder="" />
                         <label asp-for="Input.State" class="ms-2 text-muted">State</label>
                         <span asp-validation-for="Input.State" class="text-danger"></span>
                     </div>
-                    <div class="form-floating mb-3 col-md-6 ">
+
+                    <div class="form-floating mb-3 col-md-6">
                         <input asp-for="Input.PostalCode" class="form-control input-shadow" autocomplete="username" placeholder="" />
                         <label asp-for="Input.PostalCode" class="ms-2 text-muted">Postal Code</label>
                         <span asp-validation-for="Input.PostalCode" class="text-danger"></span>
                     </div>
-                    <div class="form-floating mb-3 col-md-6 ">
+
+                    <div class="form-floating mb-3 col-md-6">
                         <input asp-for="Input.PhoneNumber" class="form-control input-shadow" autocomplete="username" placeholder="" />
                         <label asp-for="Input.PhoneNumber" class="ms-2 text-muted">Phone Number</label>
                         <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
                     </div>
+
                     @if (User.IsInRole(SD.Role_Admin))
                     {
-                        <div class="form-floating mb-3 col-md-6 ">
+                        <div class="form-floating mb-3 col-md-6">
                             <select asp-for="Input.Role" asp-items="@Model.Input.RoleList" class="form-select input-shadow p-3">
                                 <option disabled selected>-Select Role-</option>
                             </select>
-
                         </div>
                     }
-                    
-                    <div class="form-floating mb-3 col-md-6 ">
-                        <select asp-for="Input.CompanyId" asp-items="@Model.Input.CompanyList" style="display:none" class="form-select input-shadow p-3">
+
+                    <div class="form-floating mb-3 col-md-6">
+                        <select asp-for="Input.CompanyId" asp-items="@Model.Input.CompanyList" class="form-select input-shadow p-3">
                             <option disabled selected>-Select Company-</option>
                         </select>
-
                     </div>
+
                     <div class="col-12">
                         <button id="registerSubmit" type="submit" class="w-100 btn rounded-2 btn-lg btn-primary">Register</button>
                     </div>
                 </form>
             </div>
+
             @if (!User.IsInRole(SD.Role_Admin))
             {
                 <div class="col-md-12 p-3 text-center">
@@ -132,10 +141,8 @@
                         }
                     </section>
                 </div>
-
             }
         </div>
-
     </div>
 </div>
 
@@ -144,15 +151,13 @@
     <script>
         $(document).ready(function () {
             $('#Input_Role').change(function () {
-                var selection = $('#Input_Role Option:Selected').text(); 
-                if(selection == 'Company'){
+                var selection = $('#Input_Role Option:Selected').text();
+                if (selection === 'Company') {
                     $('#Input_CompanyId').show();
-                }
-                else{
+                } else {
                     $('#Input_CompanyId').hide();
                 }
             });
         });
     </script>
 }
-

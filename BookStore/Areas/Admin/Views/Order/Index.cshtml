@@ -1,78 +1,78 @@
-﻿
-@{
-    var status = Context.Request.Query["status"];
-    var pending = "text-dark bg-white";
-    var inprocess = "text-dark bg-white";
-    var completed = "text-dark bg-white";
-    var approved = "text-dark bg-white";
-    var all = "text-dark bg-white";
+﻿@{
+    // Convert the query parameter to a string
+    var status = Context.Request.Query["status"].ToString();
 
-    switch (status)
+    // Determine the classes based on the status
+    var pending = status == "pending" ? "active text-white bg-primary" : "text-dark bg-white";
+    var inprocess = status == "inprocess" ? "active text-white bg-primary" : "text-dark bg-white";
+    var completed = status == "completed" ? "active text-white bg-primary" : "text-dark bg-white";
+    var approved = status == "approved" ? "active text-white bg-primary" : "text-dark bg-white";
+    var all = string.IsNullOrEmpty(status) ? "active text-white bg-primary" : "text-dark bg-white";
+
+    // Determine the text for the dropdown button
+    var buttonText = status switch
     {
-        case "pending":
-            pending = "active text-white bg-primary";
-            break;
-        case "inprocess":
-            inprocess = "active text-white bg-primary";
-            break;
-        case "completed":
-            completed = "active text-white bg-primary";
-            break;
-        case "approved":
-            approved = "active text-white bg-primary ";
-            break;
-        default:
-            all = "active text-white bg-primary";
-            break;
-    }
-
+        "pending" => "Payment Pending",
+        "inprocess" => "In Process",
+        "completed" => "Completed",
+        "approved" => "Approved",
+        "" or null => "All",
+        _ => "Status"
+    };
 }
+
+
 <div class="container">
     <div class="card card-header-pills border-0 rounded shadow-lg mt-5" style="padding:3%">
         <div class="card-header bg-white">
-            <div class="row  align-items-center">
-                    <h2 class="text-uppercase text-primary text-center">
-                        Order List
-                    </h2>
+            <div class="row align-items-center">
+                <h2 class="text-uppercase text-primary text-center">
+                    Order List
+                </h2>
             </div>
         </div>
         <div class="card-body">
-            <ul class="list-group list-group-horizontal-sm justify-content-end">
-                <a style="text-decoration:none;" asp-controller="Order"
-                   asp-action="Index" asp-route-status="inprocess">
-                <li class="list-group-item @inprocess border-dark-subtle">In Process</li>
-                </a>
-                <a style="text-decoration:none;" asp-controller="Order"
-                   asp-action="Index" asp-route-status="pending">
-                <li class="list-group-item @pending border-dark-subtle">Payment Pending</li>
-                </a>
-                <a style="text-decoration:none;" asp-controller="Order"
-                   asp-action="Index" asp-route-status="completed">
-                <li class="list-group-item @completed border-dark-subtle">Completed</li>
-                </a>
-                <a style="text-decoration:none;" asp-controller="Order"
-                   asp-action="Index" asp-route-status="approved">
-                <li class="list-group-item @approved border-dark-subtle">Approved</li>
-                </a>
-                <a style="text-decoration:none;" asp-controller="Order"
-                   asp-action="Index" asp-route-status="all">
-                <li class="list-group-item @all border-dark-subtle">All</li>
-                </a>
-            </ul>
-            <table id="tblData" class="table table-bordered table-striped" style="width:100%">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>Phone Number</th>
-                        <th>Email</th>
-                        <th>Status</th>
-                        <th>Total</th>
-                        <th></th>
-                    </tr>
-                </thead>
-            </table>
+            <div class="status-dropdown mt-3">
+                <button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                    @buttonText
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <li>
+                        <a class="dropdown-item @inprocess" asp-controller="Order" asp-action="Index" asp-route-status="inprocess">In Process</a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item @pending" asp-controller="Order" asp-action="Index" asp-route-status="pending">Payment Pending</a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item @completed" asp-controller="Order" asp-action="Index" asp-route-status="completed">Completed</a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item @approved" asp-controller="Order" asp-action="Index" asp-route-status="approved">Approved</a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item @all" asp-controller="Order" asp-action="Index" asp-route-status="all">All</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="table-responsive mt-3">
+                <table id="tblData" class="table table-bordered table-striped" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Phone Number</th>
+                            <th>Email</th>
+                            <th>Status</th>
+                            <th>Total</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
         </div>
-@section Scripts{
+    </div>
+</div>
+
+@section Scripts {
     <script src="~/js/order.js"></script>
 }

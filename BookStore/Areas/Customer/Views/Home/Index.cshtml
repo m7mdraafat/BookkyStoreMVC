@@ -1,26 +1,30 @@
 ﻿@model List<Product>
 
-<div class="container m-5 p-5 px-4">
+<div class="container my-5 py-5 px-4">
     <!-- Product Cards -->
-    <div class="row g-4">
+    <div class="row g-6">
         @foreach (var product in Model)
         {
-            <div class="col-md-3 col-sm-6 border-primary">
-                <div class="card h-100 border-white border-1 rounded-4 shadow-lg card-content">
-                    <img src="@product.ImageUrl" class="card-img-top rounded-4 card-shadow" />
+            <div class="col-sm-6 col-md-4 col-lg-3">
+                <div class="product-card h-100 border-1 rounded-4 shadow-lg">
+                    <div class="card-img-wrapper">
+                        <img src="@product.ImageUrl" class="card-img-top" alt="@product.Title" />
+                    </div>
                     <div class="card-body text-center">
                         <h5 class="card-title">@product.Title</h5>
                         <p class="card-text">@product.Author</p>
-                        <p class="card-text text text-decoration-line-through">@product.ListPrice EGP</p>
+                        <p class="card-text text-decoration-line-through">@product.ListPrice EGP</p>
                         <p class="card-text text-danger">@product.Price100 EGP</p>
-                        <form asp-action="AddToCart" method="post">
+                        <form asp-action="AddToCart" method="post" class="d-inline">
                             <input type="hidden" name="productId" value="@product.Id" />
                             <button type="submit" class="btn btn-outline-warning">
                                 <i class="bi bi-cart-plus"></i> Add to cart
                             </button>
                         </form>
-                        <a class="btn btn-outline-primary col-md-6 mt-2" asp-action="Details"
-                           asp-route-productId="@product.Id"> <i class="bi bi-eye"></i> Details</a>
+                        <a class="btn btn-outline-primary mt-2 d-block" asp-action="Details"
+                           asp-route-productId="@product.Id">
+                            <i class="bi bi-eye"></i> Details
+                        </a>
                     </div>
                 </div>
             </div>
@@ -37,3 +41,7 @@
         </button>
     </div>
 </div>
+
+@section Scripts {
+    <!-- Include any additional scripts here -->
+}
