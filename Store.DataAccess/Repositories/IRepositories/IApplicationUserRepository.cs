@@ -9,5 +9,6 @@ namespace Store.DataAccess.Repositories.IRepositories
 {
     public interface IApplicationUserRepository : IRepository<ApplicationUser>
     {
+        public void Update(ApplicationUser applicationUser);
     }
 }

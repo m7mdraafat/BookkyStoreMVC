@@ -7,7 +7,7 @@ using Store.Models.Models;
 using Store.Utility;
 using Stripe;
 using Store.DataAccess.DbInitializer;
-
+using Microsoft.AspNetCore.Authentication;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,6 +20,10 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("ProductionConnection"));
 });
 
+builder.Services.AddControllers().AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.Converters.Add(new System.Text.Json.Serialization.JsonStringEnumConverter());
+});
 
 builder.Services.Configure<StripeSettings>(builder.Configuration.GetSection("Stripe"));
 
@@ -53,7 +57,13 @@ builder.Services.AddAuthentication().AddGoogle(options =>
 
 });
 
+builder.Services.AddAuthentication().AddMicrosoftAccount(options =>
+{
+    IConfigurationSection microsoftAuthSection = builder.Configuration.GetSection("Authentication:Microsoft");
 
+    options.ClientId = microsoftAuthSection["ClientId"];
+    options.ClientSecret = microsoftAuthSection["ClientSecret"];
+});
 // adding session to services
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options =>
@@ -70,6 +80,8 @@ builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<ICompanyRepository, CompanyRepository>();
 builder.Services.AddScoped<IApplicationUserRepository, ApplicationUserRepository>();
 builder.Services.AddScoped<IShoppingCartRepository, ShoppingCartRepository>();
+
+
 // Register email sender service
 builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("MailSettings"));
 builder.Services.AddScoped<IMailingService, MailingService>();
