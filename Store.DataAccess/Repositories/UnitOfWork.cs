@@ -19,6 +19,8 @@ namespace Store.DataAccess.Repositories
         public IOrderHeaderRepository OrderHeaderRepository { get; private set; }
         public IOrderDetailRepository OrderDetailRepository {  get; private set; }
 
+        public IProductImageRepository ProductImageRepository {  get; private set; }
+
         public UnitOfWork(AppDbContext db)
         {
             _db = db;
@@ -29,6 +31,7 @@ namespace Store.DataAccess.Repositories
             ApplicationUserRepository = new ApplicationUserRepository(_db);
             OrderDetailRepository = new OrderDetailRepository(_db);
             OrderHeaderRepository = new OrderHeaderRepository(_db);
+            ProductImageRepository = new ProductImageRepository(_db);
         }
 
         public void Save()

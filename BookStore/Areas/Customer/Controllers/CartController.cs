@@ -31,10 +31,13 @@ namespace BookStore.Areas.Customer.Controllers
                 IncludeProperties: "Product"),
                 OrderHeader = new()
             };
-            foreach (var card in ShoppingCartVM.ShoppingCartList)
+
+            IEnumerable<ProductImage> productImages = _unitOfWork.ProductImageRepository.GetAll(); 
+            foreach (var cart in ShoppingCartVM.ShoppingCartList)
             {
-                card.Price = GetPriceBasedOnQuantity(card);
-                ShoppingCartVM.OrderHeader.OrderTotal += (card.Price * card.Count);
+                cart.Product.ProductImages = productImages.Where(x=>x.ProductId == cart.Product.Id).ToList();
+                cart.Price = GetPriceBasedOnQuantity(cart);
+                ShoppingCartVM.OrderHeader.OrderTotal += (cart.Price * cart.Count);
             }
             return View(ShoppingCartVM);
         }
@@ -207,7 +210,8 @@ namespace BookStore.Areas.Customer.Controllers
                     _unitOfWork.OrderHeaderRepository.UpdateStatus(id, SD.StatusApproved, SD.PaymentStatusApproved);
                     _unitOfWork.Save(); 
                 }
-                HttpContext.Session.Clear(); 
+                HttpContext.Session.Clear();
+
             }
 
             // get current products from shopping cart and remove them.

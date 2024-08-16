@@ -14,6 +14,7 @@ namespace Store.DataAccess.Data
         public DbSet<OrderHeader> OrderHeaders { get; set; }
         public DbSet<OrderDetail> OrderDetails { get; set; }
         public DbSet<ShoppingCart> ShoppingCards { get; set; }
+        public DbSet<ProductImage> ProductImages { get; set; }
         public AppDbContext(DbContextOptions options) : base(options)
         {
         }

@@ -27,7 +27,7 @@ namespace BookStore.Areas.Customer.Controllers
         {
             
 
-            IEnumerable<Product> productList = _unitOfWork.ProductRepository.GetAll(IncludeProperties:"Category");
+            IEnumerable<Product> productList = _unitOfWork.ProductRepository.GetAll(IncludeProperties:"Category,ProductImages");
             return View(productList);
         }
 
@@ -36,7 +36,7 @@ namespace BookStore.Areas.Customer.Controllers
         {
             ShoppingCart cart = new()
             {
-                Product = _unitOfWork.ProductRepository.Get(u => u.Id == productId, IncludeProperties:"Category"),
+                Product = _unitOfWork.ProductRepository.Get(u => u.Id == productId, IncludeProperties: "Category,ProductImages"),
                 Count = 1,
                 ProductId = productId
 
@@ -170,22 +170,22 @@ namespace BookStore.Areas.Customer.Controllers
 
             var totalPages = (int)Math.Ceiling((double)totalProducts / pageSize);
 
-            var cardsHtml = products.Select(p => $@"
-             <div class='col-md-3 col-sm-6 border-primary'>
-            <div class='card h-100 border-white border-1 rounded-4 shadow-lg'>
-                <img src='{p.ImageUrl}' class='card-img-top rounded-4 card-shadow'/>
-                <div class='card-body text-center'>
-                    <h5 class='card-title'>{p.Title}</h5>
-                    <p class='card-text'>{p.Author}</p>
-                    <p class='card-text text-warning'>{p.Price100.ToString("C")}</p>
-                    <button class='btn btn-outline-warning'><i class='bi bi-cart-plus'></i> Add to cart</button>
-                </div>
-            </div>
-        </div>").Aggregate((current, next) => current + next);
+        //    var cardsHtml = products.Select(p => $@"
+        //     <div class='col-md-3 col-sm-6 border-primary'>
+        //    <div class='card h-100 border-white border-1 rounded-4 shadow-lg'>
+        //        <img src='{p.ImageUrl}' class='card-img-top rounded-4 card-shadow'/>
+        //        <div class='card-body text-center'>
+        //            <h5 class='card-title'>{p.Title}</h5>
+        //            <p class='card-text'>{p.Author}</p>
+        //            <p class='card-text text-warning'>{p.Price100.ToString("C")}</p>
+        //            <button class='btn btn-outline-warning'><i class='bi bi-cart-plus'></i> Add to cart</button>
+        //        </div>
+        //    </div>
+        //</div>").Aggregate((current, next) => current + next);
 
             return Json(new
             {
-                cardsHtml,
+                //cardsHtml,
                 totalPages
             });
         }
