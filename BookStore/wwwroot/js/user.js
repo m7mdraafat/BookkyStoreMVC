@@ -30,7 +30,7 @@ function loadDataTableUsers() {
                                 <a href="#" class="btn btn-danger text-white rounded-3 me-2" style="width: 100px;" onclick=LockUnlock('${data.id}')>
                                     <i class="bi bi-lock-fill"></i> Lock 
                                 </a>
-                                <a class="btn btn-danger text-white rounded-3" style="width: 150px;">
+                                <a href="/admin/user/RoleManagement?userId=${data.id}" class="btn btn-danger text-white rounded-3" style="width: 150px;">
                                     <i class="bi bi-pencil-square"></i> Permission
                                 </a>
                             </div>
@@ -42,7 +42,7 @@ function loadDataTableUsers() {
                                 <a href="#" class="btn btn-success text-white rounded-3 me-2" style="width: 100px;" onclick=LockUnlock('${data.id}')>
                                     <i class="bi bi-unlock-fill"></i> Unlock 
                                 </a>
-                                <a class="btn btn-danger text-white rounded-3" style="width: 150px;">
+                                <a href="/admin/user/RoleManagement?userId=${data.id}" class="btn btn-danger text-white rounded-3" style="width: 150px;">
                                     <i class="bi bi-pencil-square"></i> Permission
                                 </a>
                             </div>

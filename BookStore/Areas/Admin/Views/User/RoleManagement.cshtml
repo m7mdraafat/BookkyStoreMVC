@@ -1,0 +1,73 @@
+﻿@using Store.Utility
+@model RoleManagementVM
+
+<div class="card shadow-lg border-top-0 border-secondary rounded-5" style="margin:7%">
+    <div class="card-header bg-primary  bg-gradient text-white">
+        <div class="row text-center">
+            <div class="text-center">
+                <h2 class="py-2" style="text-transform:uppercase">Manage User Role</h2>
+            </div>
+        </div> 
+    </div>
+    <div class="card-body p-5">
+        <div class="row pt-3 ">
+            <div class="col-md-12 ">
+                <form asp-action="RoleManagement" method="post" class="row">
+                    <input asp-for="UserId" hidden />
+                    <div class="form-floating mb-3 p-1 col-md-12">
+                        <input asp-for="UserName"  readonly class="form-control input-shadow" />
+                        <label asp-for="UserName" class="form-label sm-2 text-muted"></label>
+                    </div>
+                    <div class="form-floating mb-3 p-1 col-md-12">
+                        <select asp-for="CurrentRole" asp-items="@Model.RoleList" class="form-select">
+
+                        </select>
+                        <label class="form-label sm-2 text-muted">Role</label>
+
+                    </div>
+                    @{
+                        var companyVisible = "display:none";
+                    }
+                    @if(Model.CurrentRole == SD.Role_Company)
+                    {
+                        companyVisible = "display:block";
+
+                    }
+                    <div class="form-floating mb-3 p-1 col-md-12" >
+                        <select asp-for="CompanyId" asp-items="@Model.CompanyList" class="form-select" style=" @companyVisible">
+                        </select>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <button type="submit" class="btn btn-primary form-control input-shadow">Update Role</button>
+                        </div>
+                        <div class="col-md-2">
+                            <a  asp-action="Index" class="btn border-1 btn-secondary input-shadow form-control">
+                                Back To List
+                            </a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+    <script>
+        $(document).ready(function () {
+            $('#CurrentRole').change(function () {
+                var selection = $('#CurrentRole Option:Selected').text();
+                if (selection === 'Company') {
+                    $('#CompanyId').show();
+                } else {
+                    $('#CompanyId').hide();
+                }
+            });
+        });
+    </script>
+}
